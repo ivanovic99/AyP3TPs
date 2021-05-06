@@ -1,13 +1,13 @@
-!classDefinition: #Caja category: 'FactorioPart3'!
+!classDefinition: #Caja category: 'FactorioEntrega'!
 DenotativeObject subclass: #Caja
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	category: 'FactorioPart3'!
+	category: 'FactorioEntrega'!
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
-!classDefinition: 'Caja class' category: 'FactorioPart3'!
+!classDefinition: 'Caja class' category: 'FactorioEntrega'!
 Caja class
 	instanceVariableNames: 'contenido'!
 
@@ -31,7 +31,7 @@ cantidadDeMenasTotales
 
 	^contenido size.! !
 
-!Caja class methodsFor: 'as yet unclassified' stamp: 'MF 5/6/2021 13:07:05'!
+!Caja class methodsFor: 'as yet unclassified' stamp: 'IE 5/6/2021 16:27:33'!
 initializeCollaboratorsFromFile
 	"Auto generated method for loading purposes - Do not modify it"
 
@@ -43,16 +43,16 @@ vaciar
 	contenido := OrderedCollection new.! !
 
 
-!classDefinition: #CintaA category: 'FactorioPart3'!
+!classDefinition: #CintaA category: 'FactorioEntrega'!
 DenotativeObject subclass: #CintaA
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	category: 'FactorioPart3'!
+	category: 'FactorioEntrega'!
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
-!classDefinition: 'CintaA class' category: 'FactorioPart3'!
+!classDefinition: 'CintaA class' category: 'FactorioEntrega'!
 CintaA class
 	instanceVariableNames: 'transportado destino'!
 
@@ -60,16 +60,6 @@ CintaA class
 agregarMenas: coleccionDeMenas
 
 	^transportado addAll: coleccionDeMenas.! !
-
-!CintaA class methodsFor: 'as yet unclassified' stamp: 'IE 5/5/2021 15:38:33'!
-cantidadDeMenasDeCarbon
-
-	^transportado count: [ :cadaElemento | cadaElemento = 'una mena de carbon' ].! !
-
-!CintaA class methodsFor: 'as yet unclassified' stamp: 'IE 5/5/2021 15:38:33'!
-cantidadDeMenasDeHierro
-
-	^transportado count: [ :cadaElemento | cadaElemento = 'una mena de hierro' ].! !
 
 !CintaA class methodsFor: 'as yet unclassified' stamp: 'IE 5/5/2021 15:38:33'!
 cantidadDeMenasTotales
@@ -82,7 +72,7 @@ destino: contenedor
 	destino := contenedor.
 	^self.! !
 
-!CintaA class methodsFor: 'as yet unclassified' stamp: 'MF 5/6/2021 13:07:05'!
+!CintaA class methodsFor: 'as yet unclassified' stamp: 'IE 5/6/2021 16:27:33'!
 initializeCollaboratorsFromFile
 	"Auto generated method for loading purposes - Do not modify it"
 
@@ -102,16 +92,16 @@ vaciar
 	transportado := OrderedCollection new.! !
 
 
-!classDefinition: #CintaB category: 'FactorioPart3'!
+!classDefinition: #CintaB category: 'FactorioEntrega'!
 DenotativeObject subclass: #CintaB
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	category: 'FactorioPart3'!
+	category: 'FactorioEntrega'!
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
-!classDefinition: 'CintaB class' category: 'FactorioPart3'!
+!classDefinition: 'CintaB class' category: 'FactorioEntrega'!
 CintaB class
 	instanceVariableNames: 'transportado destino'!
 
@@ -119,16 +109,6 @@ CintaB class
 agregarMenas: coleccionDeMenas
 
 	^transportado addAll: coleccionDeMenas.! !
-
-!CintaB class methodsFor: 'as yet unclassified' stamp: 'IE 5/5/2021 15:21:32'!
-cantidadDeMenasDeCarbon
-
-	^transportado count: [ :cadaElemento | cadaElemento = 'una mena de carbon' ].! !
-
-!CintaB class methodsFor: 'as yet unclassified' stamp: 'IE 5/5/2021 15:21:32'!
-cantidadDeMenasDeHierro
-
-	^transportado count: [ :cadaElemento | cadaElemento = 'una mena de hierro' ].! !
 
 !CintaB class methodsFor: 'as yet unclassified' stamp: 'IE 5/5/2021 15:21:32'!
 cantidadDeMenasTotales
@@ -141,7 +121,7 @@ destino: contenedor
 	destino := contenedor.
 	^self.! !
 
-!CintaB class methodsFor: 'as yet unclassified' stamp: 'MF 5/6/2021 13:07:05'!
+!CintaB class methodsFor: 'as yet unclassified' stamp: 'IE 5/6/2021 16:27:33'!
 initializeCollaboratorsFromFile
 	"Auto generated method for loading purposes - Do not modify it"
 
@@ -161,16 +141,16 @@ vaciar
 	transportado := OrderedCollection new.! !
 
 
-!classDefinition: #ExtractorDeCarbon category: 'FactorioPart3'!
+!classDefinition: #ExtractorDeCarbon category: 'FactorioEntrega'!
 DenotativeObject subclass: #ExtractorDeCarbon
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	category: 'FactorioPart3'!
+	category: 'FactorioEntrega'!
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
-!classDefinition: 'ExtractorDeCarbon class' category: 'FactorioPart3'!
+!classDefinition: 'ExtractorDeCarbon class' category: 'FactorioEntrega'!
 ExtractorDeCarbon class
 	instanceVariableNames: 'energiaActual destino'!
 
@@ -211,7 +191,7 @@ extraer
 	self sacarEnergia: energiaConsumida.
 	^destino agregarMenas: (self conjuntoDeMenasDeCarbonCantidad: cantidadDeMenas).! !
 
-!ExtractorDeCarbon class methodsFor: 'as yet unclassified' stamp: 'MF 5/6/2021 13:07:05'!
+!ExtractorDeCarbon class methodsFor: 'as yet unclassified' stamp: 'IE 5/6/2021 16:27:33'!
 initializeCollaboratorsFromFile
 	"Auto generated method for loading purposes - Do not modify it"
 
@@ -231,16 +211,16 @@ sacarEnergia: energiaASacar
 	energiaActual := energiaActual - energiaASacar! !
 
 
-!classDefinition: #ExtractorDeHierro category: 'FactorioPart3'!
+!classDefinition: #ExtractorDeHierro category: 'FactorioEntrega'!
 DenotativeObject subclass: #ExtractorDeHierro
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	category: 'FactorioPart3'!
+	category: 'FactorioEntrega'!
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
-!classDefinition: 'ExtractorDeHierro class' category: 'FactorioPart3'!
+!classDefinition: 'ExtractorDeHierro class' category: 'FactorioEntrega'!
 ExtractorDeHierro class
 	instanceVariableNames: 'energiaActual destino'!
 
@@ -281,7 +261,7 @@ extraer
 	self sacarEnergia: energiaConsumida.
 	^destino agregarMenas: (self conjuntoDeMenasDeHierroCantidad: cantidadDeMenas).! !
 
-!ExtractorDeHierro class methodsFor: 'as yet unclassified' stamp: 'MF 5/6/2021 13:07:05'!
+!ExtractorDeHierro class methodsFor: 'as yet unclassified' stamp: 'IE 5/6/2021 16:27:33'!
 initializeCollaboratorsFromFile
 	"Auto generated method for loading purposes - Do not modify it"
 
@@ -301,16 +281,16 @@ sacarEnergia: energiaASacar
 	energiaActual := energiaActual - energiaASacar! !
 
 
-!classDefinition: #PruebasDeExtractorDeCarbon category: 'FactorioPart3'!
+!classDefinition: #PruebasDeExtractorDeCarbon category: 'FactorioEntrega'!
 DenotativeObject subclass: #PruebasDeExtractorDeCarbon
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	category: 'FactorioPart3'!
+	category: 'FactorioEntrega'!
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
-!classDefinition: 'PruebasDeExtractorDeCarbon class' category: 'FactorioPart3'!
+!classDefinition: 'PruebasDeExtractorDeCarbon class' category: 'FactorioEntrega'!
 PruebasDeExtractorDeCarbon class
 	instanceVariableNames: ''!
 
@@ -357,16 +337,16 @@ test05UnExtractorPuedeExtraerMultiplesMenasConMuchaEnergia
 ! !
 
 
-!classDefinition: #PruebasDeFactorio category: 'FactorioPart3'!
+!classDefinition: #PruebasDeFactorio category: 'FactorioEntrega'!
 DenotativeObject subclass: #PruebasDeFactorio
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	category: 'FactorioPart3'!
+	category: 'FactorioEntrega'!
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
-!classDefinition: 'PruebasDeFactorio class' category: 'FactorioPart3'!
+!classDefinition: 'PruebasDeFactorio class' category: 'FactorioEntrega'!
 PruebasDeFactorio class
 	instanceVariableNames: ''!
 
@@ -380,7 +360,7 @@ testEscenarioExtractorCaja
 	Assert that: Caja cantidadDeMenasTotales isEqualTo: 1.
 	Assert that: Caja cantidadDeMenasDeCarbon isEqualTo: 1.! !
 
-!PruebasDeFactorio class methodsFor: 'as yet unclassified' stamp: 'MF 5/6/2021 13:06:57'!
+!PruebasDeFactorio class methodsFor: 'as yet unclassified' stamp: 'MF 5/6/2021 20:32:34'!
 testEscenarioExtractorDosCintas
 
 	ExtractorDeCarbon ponerEnCeroLaEnergia.
@@ -409,33 +389,19 @@ testEscenarioExtractorDosCintas
 	Assert that: Caja cantidadDeMenasDeHierro isEqualTo: 0.
 	
 	Assert that: CintaA cantidadDeMenasTotales  isEqualTo: 1.
-	Assert that: CintaA cantidadDeMenasDeCarbon  isEqualTo: 1.
-	Assert that: CintaA cantidadDeMenasDeHierro  isEqualTo: 0.
-	
 	Assert that: CintaB cantidadDeMenasTotales  isEqualTo: 1.	
-	Assert that: CintaB cantidadDeMenasDeHierro  isEqualTo: 1.
-	Assert that: CintaB cantidadDeMenasDeCarbon  isEqualTo: 0.
-	
 	
 	
 	CintaB transportar.
 	
 	Assert that: CintaB cantidadDeMenasTotales  isEqualTo: 0.	
-	Assert that: CintaB cantidadDeMenasDeHierro  isEqualTo: 0.
-	Assert that: CintaB cantidadDeMenasDeCarbon  isEqualTo: 0.
-	
 	Assert that: CintaA cantidadDeMenasTotales  isEqualTo: 2.
-	Assert that: CintaA cantidadDeMenasDeCarbon  isEqualTo: 1.
-	Assert that: CintaA cantidadDeMenasDeHierro  isEqualTo: 1.
-	
 	
 	CintaA transportar.
 	Assert that: Caja cantidadDeMenasTotales isEqualTo: 2.
 	Assert that: Caja cantidadDeMenasDeCarbon isEqualTo: 1.
 	Assert that: Caja cantidadDeMenasDeHierro isEqualTo: 1.
 	Assert that: CintaA cantidadDeMenasTotales  isEqualTo: 0.
-	Assert that: CintaA cantidadDeMenasDeCarbon  isEqualTo: 0.
-	Assert that: CintaA cantidadDeMenasDeHierro  isEqualTo: 0.
 	
 	"Prueba con mas menas"
 	ExtractorDeCarbon agregarEnergia: 10 * joule.
@@ -446,20 +412,16 @@ testEscenarioExtractorDosCintas
 	
 	CintaB transportar.
 	Assert that: CintaB cantidadDeMenasTotales  isEqualTo: 0.	
-	Assert that: CintaB cantidadDeMenasDeHierro  isEqualTo: 0.
-	Assert that: CintaB cantidadDeMenasDeCarbon  isEqualTo: 0.
 	
 	CintaA transportar.
 	Assert that: CintaA cantidadDeMenasTotales  isEqualTo: 0.
-	Assert that: CintaA cantidadDeMenasDeCarbon  isEqualTo: 0.
-	Assert that: CintaA cantidadDeMenasDeHierro  isEqualTo: 0.
 	
 	Assert that: Caja cantidadDeMenasTotales isEqualTo: 6.
 	Assert that: Caja cantidadDeMenasDeCarbon isEqualTo: 3.
 	Assert that: Caja cantidadDeMenasDeHierro isEqualTo: 3.
 	! !
 
-!PruebasDeFactorio class methodsFor: 'as yet unclassified' stamp: 'MF 5/6/2021 12:58:24'!
+!PruebasDeFactorio class methodsFor: 'as yet unclassified' stamp: 'MF 5/6/2021 20:33:10'!
 testEscenarioExtractorUnaCinta
 
 	ExtractorDeCarbon ponerEnCeroLaEnergia.
@@ -474,23 +436,18 @@ testEscenarioExtractorUnaCinta
 	ExtractorDeCarbon extraer.
 	Assert that: Caja cantidadDeMenasTotales isEqualTo: 0.
 	Assert that: Caja cantidadDeMenasDeCarbon isEqualTo: 0.
-	Assert that: Caja cantidadDeMenasDeHierro isEqualTo: 0. "Agregado"
+	Assert that: Caja cantidadDeMenasDeHierro isEqualTo: 0. 
 	
 	Assert that: CintaA cantidadDeMenasTotales  isEqualTo: 1.
-	Assert that: CintaA cantidadDeMenasDeCarbon isEqualTo: 1.  "Agregado"
-	Assert that: CintaA cantidadDeMenasDeHierro isEqualTo: 0. "Agregado"
-	
 	
 	CintaA transportar.
 	Assert that: Caja cantidadDeMenasTotales isEqualTo: 1.
 	Assert that: Caja cantidadDeMenasDeCarbon isEqualTo: 1.
-	Assert that: Caja cantidadDeMenasDeHierro isEqualTo: 0. "Agregado"
+	Assert that: Caja cantidadDeMenasDeHierro isEqualTo: 0. 
 	
 	Assert that: CintaA cantidadDeMenasTotales  isEqualTo: 0.
-	Assert that: CintaA cantidadDeMenasDeCarbon isEqualTo: 0. "Agregado"
-	Assert that: CintaA cantidadDeMenasDeHierro isEqualTo: 0. "Agregado"
 	
-	"Prueba con varias menas, la mena anterior + otras 3 nuevas" " -- Agregado"
+	"Prueba con varias menas, la mena anterior + otras 3 nuevas"
 	ExtractorDeCarbon agregarEnergia: 15 * joule. 
 	ExtractorDeCarbon extraer.
 	CintaA transportar .
