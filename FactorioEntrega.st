@@ -31,11 +31,11 @@ cantidadDeMenasTotales
 
 	^contenido size.! !
 
-!Caja class methodsFor: 'as yet unclassified' stamp: 'IE 5/6/2021 16:27:33'!
+!Caja class methodsFor: 'as yet unclassified' stamp: 'IE 5/6/2021 20:42:58'!
 initializeCollaboratorsFromFile
 	"Auto generated method for loading purposes - Do not modify it"
 
-	contenido := ((OrderedCollection new) add: 'una mena de carbon'; yourself).! !
+	contenido := ((OrderedCollection new) add: 'una mena de carbon'; add: 'una mena de carbon'; add: 'una mena de carbon'; add: 'una mena de carbon'; add: 'una mena de carbon'; add: 'una mena de carbon'; add: 'una mena de carbon'; add: 'una mena de carbon'; add: 'una mena de carbon'; add: 'una mena de carbon'; add: 'una mena de carbon'; add: 'una mena de carbon'; add: 'una mena de carbon'; add: 'una mena de carbon'; add: 'una mena de carbon'; add: 'una mena de carbon'; add: 'una mena de carbon'; add: 'una mena de carbon'; add: 'una mena de carbon'; add: 'una mena de carbon'; add: 'una mena de carbon'; add: 'una mena de carbon'; add: 'una mena de carbon'; add: 'una mena de carbon'; add: 'una mena de carbon'; add: 'una mena de carbon'; add: 'una mena de carbon'; add: 'una mena de carbon'; add: 'una mena de carbon'; add: 'una mena de carbon'; yourself).! !
 
 !Caja class methodsFor: 'as yet unclassified' stamp: 'IE 5/5/2021 15:34:18'!
 vaciar
@@ -72,14 +72,14 @@ destino: contenedor
 	destino := contenedor.
 	^self.! !
 
-!CintaA class methodsFor: 'as yet unclassified' stamp: 'IE 5/6/2021 16:27:33'!
+!CintaA class methodsFor: 'as yet unclassified' stamp: 'IE 5/6/2021 20:42:58'!
 initializeCollaboratorsFromFile
 	"Auto generated method for loading purposes - Do not modify it"
 
 	transportado := ((OrderedCollection new)).
 	destino := Caja.! !
 
-!CintaA class methodsFor: 'as yet unclassified' stamp: 'IE 5/5/2021 15:38:33'!
+!CintaA class methodsFor: 'as yet unclassified' stamp: 'IE 5/6/2021 20:30:26'!
 transportar
 
 	destino agregarMenas: transportado.
@@ -121,7 +121,7 @@ destino: contenedor
 	destino := contenedor.
 	^self.! !
 
-!CintaB class methodsFor: 'as yet unclassified' stamp: 'IE 5/6/2021 16:27:33'!
+!CintaB class methodsFor: 'as yet unclassified' stamp: 'IE 5/6/2021 20:42:58'!
 initializeCollaboratorsFromFile
 	"Auto generated method for loading purposes - Do not modify it"
 
@@ -191,12 +191,12 @@ extraer
 	self sacarEnergia: energiaConsumida.
 	^destino agregarMenas: (self conjuntoDeMenasDeCarbonCantidad: cantidadDeMenas).! !
 
-!ExtractorDeCarbon class methodsFor: 'as yet unclassified' stamp: 'IE 5/6/2021 16:27:33'!
+!ExtractorDeCarbon class methodsFor: 'as yet unclassified' stamp: 'IE 5/6/2021 20:42:58'!
 initializeCollaboratorsFromFile
 	"Auto generated method for loading purposes - Do not modify it"
 
 	energiaActual := (SimpleMeasure basicNew instVarAt: 1 put: 0; instVarAt: 2 put: (BaseUnit basicNew instVarAt: 1 put: 'joule'; instVarAt: 2 put: 'joules'; instVarAt: 3 put: 'j'; yourself); yourself).
-	destino := Caja.! !
+	destino := CintaA.! !
 
 !ExtractorDeCarbon class methodsFor: 'as yet unclassified' stamp: 'SF 4/20/2021 18:30:27'!
 menasAExtraerSegunEnergiaActual
@@ -261,7 +261,7 @@ extraer
 	self sacarEnergia: energiaConsumida.
 	^destino agregarMenas: (self conjuntoDeMenasDeHierroCantidad: cantidadDeMenas).! !
 
-!ExtractorDeHierro class methodsFor: 'as yet unclassified' stamp: 'IE 5/6/2021 16:27:33'!
+!ExtractorDeHierro class methodsFor: 'as yet unclassified' stamp: 'IE 5/6/2021 20:42:58'!
 initializeCollaboratorsFromFile
 	"Auto generated method for loading purposes - Do not modify it"
 
@@ -360,7 +360,31 @@ testEscenarioExtractorCaja
 	Assert that: Caja cantidadDeMenasTotales isEqualTo: 1.
 	Assert that: Caja cantidadDeMenasDeCarbon isEqualTo: 1.! !
 
-!PruebasDeFactorio class methodsFor: 'as yet unclassified' stamp: 'MF 5/6/2021 20:32:34'!
+!PruebasDeFactorio class methodsFor: 'as yet unclassified' stamp: 'IE 5/6/2021 20:41:47'!
+testEscenarioExtractorDosCintaVolumen
+
+	ExtractorDeCarbon agregarEnergia: 150 * joule.
+	ExtractorDeHierro agregarEnergia: 150 * joule.
+	
+	ExtractorDeCarbon  destino: CintaA.
+	ExtractorDeHierro destino: CintaB.
+	CintaB destino: CintaA.
+	CintaA destino: Caja.
+	
+	Caja vaciar.
+		
+	ExtractorDeCarbon extraer.
+	ExtractorDeHierro extraer.
+	
+	CintaB transportar.
+	
+	CintaA transportar.
+	
+	Assert that: Caja cantidadDeMenasTotales isEqualTo: 60.
+	Assert that: Caja cantidadDeMenasDeCarbon isEqualTo: 30.
+	Assert that: Caja cantidadDeMenasDeHierro isEqualTo: 30.! !
+
+!PruebasDeFactorio class methodsFor: 'as yet unclassified' stamp: 'IE 5/6/2021 20:38:43'!
 testEscenarioExtractorDosCintas
 
 	ExtractorDeCarbon ponerEnCeroLaEnergia.
@@ -380,48 +404,21 @@ testEscenarioExtractorDosCintas
 	Caja vaciar.
 	
 	
-	
 	ExtractorDeCarbon extraer.
 	ExtractorDeHierro extraer.
 	
-	Assert that: Caja cantidadDeMenasTotales isEqualTo: 0.
-	Assert that: Caja cantidadDeMenasDeCarbon isEqualTo: 0.
-	Assert that: Caja cantidadDeMenasDeHierro isEqualTo: 0.
-	
-	Assert that: CintaA cantidadDeMenasTotales  isEqualTo: 1.
 	Assert that: CintaB cantidadDeMenasTotales  isEqualTo: 1.	
 	
 	
 	CintaB transportar.
 	
-	Assert that: CintaB cantidadDeMenasTotales  isEqualTo: 0.	
-	Assert that: CintaA cantidadDeMenasTotales  isEqualTo: 2.
-	
 	CintaA transportar.
 	Assert that: Caja cantidadDeMenasTotales isEqualTo: 2.
 	Assert that: Caja cantidadDeMenasDeCarbon isEqualTo: 1.
 	Assert that: Caja cantidadDeMenasDeHierro isEqualTo: 1.
-	Assert that: CintaA cantidadDeMenasTotales  isEqualTo: 0.
-	
-	"Prueba con mas menas"
-	ExtractorDeCarbon agregarEnergia: 10 * joule.
-	ExtractorDeHierro agregarEnergia: 10 * joule.
-	
-	ExtractorDeCarbon extraer.
-	ExtractorDeHierro extraer.
-	
-	CintaB transportar.
-	Assert that: CintaB cantidadDeMenasTotales  isEqualTo: 0.	
-	
-	CintaA transportar.
-	Assert that: CintaA cantidadDeMenasTotales  isEqualTo: 0.
-	
-	Assert that: Caja cantidadDeMenasTotales isEqualTo: 6.
-	Assert that: Caja cantidadDeMenasDeCarbon isEqualTo: 3.
-	Assert that: Caja cantidadDeMenasDeHierro isEqualTo: 3.
-	! !
+! !
 
-!PruebasDeFactorio class methodsFor: 'as yet unclassified' stamp: 'MF 5/6/2021 20:33:10'!
+!PruebasDeFactorio class methodsFor: 'as yet unclassified' stamp: 'IE 5/6/2021 20:35:54'!
 testEscenarioExtractorUnaCinta
 
 	ExtractorDeCarbon ponerEnCeroLaEnergia.
@@ -434,28 +431,35 @@ testEscenarioExtractorUnaCinta
 	Caja vaciar.
 	
 	ExtractorDeCarbon extraer.
-	Assert that: Caja cantidadDeMenasTotales isEqualTo: 0.
-	Assert that: Caja cantidadDeMenasDeCarbon isEqualTo: 0.
-	Assert that: Caja cantidadDeMenasDeHierro isEqualTo: 0. 
+
 	
 	Assert that: CintaA cantidadDeMenasTotales  isEqualTo: 1.
 	
 	CintaA transportar.
-	Assert that: Caja cantidadDeMenasTotales isEqualTo: 1.
-	Assert that: Caja cantidadDeMenasDeCarbon isEqualTo: 1.
-	Assert that: Caja cantidadDeMenasDeHierro isEqualTo: 0. 
+	
 	
 	Assert that: CintaA cantidadDeMenasTotales  isEqualTo: 0.
-	
-	"Prueba con varias menas, la mena anterior + otras 3 nuevas"
-	ExtractorDeCarbon agregarEnergia: 15 * joule. 
-	ExtractorDeCarbon extraer.
-	CintaA transportar .
-	Assert that: Caja cantidadDeMenasTotales isEqualTo: 4.
-	Assert that: Caja cantidadDeMenasDeCarbon isEqualTo: 4.
+	Assert that: Caja cantidadDeMenasTotales isEqualTo: 1.
+	Assert that: Caja cantidadDeMenasDeCarbon isEqualTo: 1.
 	
 	
 	! !
+
+!PruebasDeFactorio class methodsFor: 'as yet unclassified' stamp: 'IE 5/6/2021 20:42:02'!
+testEscenarioExtractorUnaCintaVolumen
+
+	ExtractorDeCarbon agregarEnergia: 150 * joule. 
+	ExtractorDeCarbon destino: CintaA.
+	CintaA destino: Caja.
+	
+	CintaA vaciar.
+	Caja vaciar.
+	
+	ExtractorDeCarbon extraer.
+	CintaA transportar.
+	
+	Assert that: Caja cantidadDeMenasTotales isEqualTo: 30.
+	Assert that: Caja cantidadDeMenasDeCarbon isEqualTo: 30.! !
 
 Caja initializeAfterFileIn!
 CintaA initializeAfterFileIn!
