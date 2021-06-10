@@ -502,6 +502,72 @@ test12CanHandleLongSentences
 	
 	! !
 
+!SentenceFinderByPrefixTest methodsFor: 'test' stamp: 'IE 6/10/2021 18:31:52'!
+test13StackDoesNotChangeSize
+
+	| stack prefix sentenceFinderByPrefix result |
+	
+	stack := OOStack new.
+	stack push: 'noWinter is coming noWinter is coming noWinter is coming noWinter is coming noWinter is coming'.
+	stack push: 'winning is everything noWinter is coming noWinter is coming noWinter is coming noWinter is coming'.
+	stack push: 'The winds of Winter noWinter is coming noWinter is coming v noWinter is coming noWinter is coming'.
+	stack push: 'noWinter is here noWinter is coming noWinter is coming noWinter is coming noWinter is coming'.
+	stack push: 'Wiiiiin noWinter is coming noWinter is comingnoWinter is coming noWinter is coming noWinter is coming'.
+	stack push: 'wWwWwWwW noWinter is coming noWinter is coming noWinter is coming noWinter is coming'.
+	stack push: 'Wiiiiin2 noWinter is coming noWinter is coming noWinter is coming noWinter is coming'.
+	stack push: 'wWwWwWwW noWinter is coming noWinter is coming noWinter is coming noWinter is coming'.
+	stack push: 'noWint noWinter is coming noWinter is coming noWinter is coming noWinter is coming'.
+	
+	prefix := 'wWwWwWwW'.
+	
+	sentenceFinderByPrefix := SentenceFinderByPrefix new.
+	
+	result := (sentenceFinderByPrefix find: prefix in: stack).
+	
+	self assert: stack size equals: 9.
+	
+	
+	
+	
+	
+	
+	
+	
+	! !
+
+!SentenceFinderByPrefixTest methodsFor: 'test' stamp: 'IE 6/10/2021 18:36:09'!
+test14StackDoesNotChangeOrder
+
+	| stack prefix sentenceFinderByPrefix result |
+	
+	stack := OOStack new.
+	stack push: 'noWinter'.
+	stack push: 'wWwWwWwW n'.
+	stack push: 'Wiiiiin2 no'.
+	stack push: 'wWwWwWwW'.
+	stack push: 'noWint noWinter'.
+	
+	prefix := 'wWwWwWwW'.
+	
+	sentenceFinderByPrefix := SentenceFinderByPrefix new.
+	
+	result := (sentenceFinderByPrefix find: prefix in: stack).
+	
+	self assert: stack pop equals: 'noWint noWinter'.
+	self assert: stack pop equals: 'wWwWwWwW'.	
+	self assert: stack pop equals: 'Wiiiiin2 no'.
+	self assert: stack pop equals: 'wWwWwWwW n'.	
+	self assert: stack pop equals: 'noWinter'.
+	
+	
+	
+	
+	
+	
+	
+	
+	! !
+
 
 !classDefinition: #OOStack category: 'Stack-Exercise'!
 Object subclass: #OOStack
