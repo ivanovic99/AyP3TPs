@@ -5,7 +5,7 @@ TestCase subclass: #EXTRAValidPortfolioTests
 	poolDictionaries: ''
 	category: 'ServiciosFinancieros-Ejercicio'!
 
-!EXTRAValidPortfolioTests methodsFor: 'as yet unclassified' stamp: 'MF 7/6/2021 17:26:56'!
+!EXTRAValidPortfolioTests methodsFor: 'as yet unclassified' stamp: 'IE 7/7/2021 23:27:07'!
 test01PortfolioCannotStoreSameAccountTwice
 	|portfolio account|
 	
@@ -13,15 +13,19 @@ test01PortfolioCannotStoreSameAccountTwice
 	portfolio  := Portfolio new.
 	
 	portfolio addAccountOrPortfolio: account.
-	portfolio addAccountOrPortfolio: account.
+	
 	 "manejo podria ser error o no hacer nada"
 	
-	self assert: portfolio amountOfItems equals: 1.
+	self 
+		should: [portfolio addAccountOrPortfolio: account]
+		raise: Error
+		withExceptionDo: [ :anError | self assert: anError messageText equals: Portfolio cannotStoreAccountInPortfolioErrorDescription ].	
+	
 	
 ! !
 
-!EXTRAValidPortfolioTests methodsFor: 'as yet unclassified' stamp: 'MF 7/6/2021 17:29:27'!
-test03PortfolioCannotStoreAnAccountThatIsAlreadyInAnInternalPortfolio
+!EXTRAValidPortfolioTests methodsFor: 'as yet unclassified' stamp: 'IE 7/7/2021 23:25:39'!
+test02PortfolioCannotStoreAnAccountThatIsAlreadyInAnInternalPortfolio
 	|portfolio1 portfolio2 accountA |
 	
 	accountA := ReceptiveAccount new.
@@ -33,28 +37,28 @@ test03PortfolioCannotStoreAnAccountThatIsAlreadyInAnInternalPortfolio
 	portfolio2 addAccountOrPortfolio: accountA.
 	portfolio1 addAccountOrPortfolio: portfolio2.
 	
-	portfolio1 addAccountOrPortfolio: accountA.
+	self 
+		should: [portfolio1 addAccountOrPortfolio: accountA.]
+		raise: Error
+		withExceptionDo: [ :anError | self assert: anError messageText equals: Portfolio cannotStoreAccountInPortfolioErrorDescription ].	
+	
 
-	
-	self assert: portfolio1 amountOfItems equals: 1.
-	
 ! !
 
-!EXTRAValidPortfolioTests methodsFor: 'as yet unclassified' stamp: 'MF 7/6/2021 17:29:41'!
-test04PortfolioCannotStoreItself
+!EXTRAValidPortfolioTests methodsFor: 'as yet unclassified' stamp: 'IE 7/7/2021 23:10:09'!
+test03PortfolioCannotStoreItself
 	|portfolio |
 	
 	
 	portfolio  := Portfolio new.
 	
-	portfolio addAccountOrPortfolio: portfolio.
-	
-	self assert: portfolio amountOfItems equals: 0.
-	
-! !
+	self 
+		should: [portfolio addAccountOrPortfolio: portfolio.]
+		raise: Error
+		withExceptionDo: [ :anError | self assert: anError messageText equals: Portfolio cannotStoreSelfErrorDescription ].	! !
 
-!EXTRAValidPortfolioTests methodsFor: 'as yet unclassified' stamp: 'MF 7/6/2021 18:26:39'!
-test05PortfolioCannotStoreAccountIfAccountIsItemtOfPortfolioParent
+!EXTRAValidPortfolioTests methodsFor: 'as yet unclassified' stamp: 'IE 7/7/2021 23:11:03'!
+test04PortfolioCannotStoreAccountIfAccountIsItemtOfPortfolioParent
 	|portfolio1 portfolio2 account|
 	
 	account := ReceptiveAccount new.
@@ -64,14 +68,16 @@ test05PortfolioCannotStoreAccountIfAccountIsItemtOfPortfolioParent
 	portfolio1 addAccountOrPortfolio: account.
 	portfolio1 addAccountOrPortfolio: portfolio2.
 
-	portfolio2 addAccountOrPortfolio: account .
 	
-	self assert: portfolio2 amountOfItems equals: 0.
 	
+	self 
+		should: [portfolio2 addAccountOrPortfolio: account.]
+		raise: Error
+		withExceptionDo: [ :anError | self assert: anError messageText equals: Portfolio cannotStoreAccountInPortfolioErrorDescription ].	
 ! !
 
-!EXTRAValidPortfolioTests methodsFor: 'as yet unclassified' stamp: 'IE 7/7/2021 20:03:25'!
-test06PortfolioCannotStoreAnyAccountIfAnyAccountIsItemtOfAnyPortfolioParent
+!EXTRAValidPortfolioTests methodsFor: 'as yet unclassified' stamp: 'IE 7/7/2021 23:28:38'!
+test05PortfolioCannotStoreAnyAccountIfAnyAccountIsItemtOfAnyPortfolioParent
 	|portfolio1 portfolio2 portfolio3 accountA accountB|
 	
 	accountA := ReceptiveAccount new.
@@ -89,16 +95,21 @@ test06PortfolioCannotStoreAnyAccountIfAnyAccountIsItemtOfAnyPortfolioParent
 	portfolio1 addAccountOrPortfolio: portfolio3.
 	portfolio2 addAccountOrPortfolio: portfolio3.
 	
-	portfolio3 addAccountOrPortfolio: accountA.
-	portfolio3 addAccountOrPortfolio: accountB.
-
 	
-	self assert: portfolio3 amountOfItems equals: 0.
 	
-! !
 
-!EXTRAValidPortfolioTests methodsFor: 'as yet unclassified' stamp: 'MF 7/7/2021 15:27:48'!
-test07PortfolioCannotStorePortfolioIfBothIncludeTheSameAccount
+	self 
+		should: [portfolio3 addAccountOrPortfolio: accountA.]
+		raise: Error
+		withExceptionDo: [ :anError | self assert: anError messageText equals: Portfolio cannotStoreAccountInPortfolioErrorDescription ].	
+
+	self 
+		should: [portfolio3 addAccountOrPortfolio: accountB.]
+		raise: Error
+		withExceptionDo: [ :anError | self assert: anError messageText equals: Portfolio cannotStoreAccountInPortfolioErrorDescription ].	! !
+
+!EXTRAValidPortfolioTests methodsFor: 'as yet unclassified' stamp: 'IE 7/7/2021 23:31:28'!
+test06PortfolioCannotStorePortfolioIfBothIncludeTheSameAccount
 	|portfolio1 portfolio2 account |
 	
 	account := ReceptiveAccount new.
@@ -111,48 +122,11 @@ test07PortfolioCannotStorePortfolioIfBothIncludeTheSameAccount
 	portfolio2 addAccountOrPortfolio: account.
 	
 	"agrego pf2 a pf1 "
-	portfolio1 addAccountOrPortfolio: portfolio2.
 	
-	self assert: portfolio1 amountOfItems equals: 1.
-	
-! !
-
-!EXTRAValidPortfolioTests methodsFor: 'as yet unclassified' stamp: 'MF 7/7/2021 15:30:03'!
-test08
-	|portfolio1 portfolio2 portfolio3  |
-	
-	
-	portfolio1  := Portfolio new.
-	portfolio2  := Portfolio new.
-	portfolio3  := Portfolio new.
-	
-	
-	portfolio1 addAccountOrPortfolio: portfolio3.
-	portfolio2 addAccountOrPortfolio: portfolio3.
-	
-	portfolio1 addAccountOrPortfolio: portfolio2.
-
-	
-	self assert: portfolio1 amountOfItems equals: 1.
-	
-! !
-
-!EXTRAValidPortfolioTests methodsFor: 'as yet unclassified' stamp: 'MF 7/6/2021 17:28:42'!
-ztest02
-	|portfolio accountA accountB|
-	
-	accountA := ReceptiveAccount new.
-	accountB := ReceptiveAccount new.
-	
-	portfolio  := Portfolio new.
-	
-	portfolio addAccountOrPortfolio: accountA.
-	portfolio addAccountOrPortfolio: accountB.
-	
-	portfolio addAccountOrPortfolio: accountA.
-
-	
-	self assert: portfolio amountOfItems equals: 2.
+	self 
+		should: [portfolio1 addAccountOrPortfolio: portfolio2.]
+		raise: Error
+		withExceptionDo: [ :anError | self assert: anError messageText equals: Portfolio cannotStoreAccountInPortfolioErrorDescription ].	
 	
 ! !
 
@@ -180,8 +154,8 @@ test01PortfolioKnowsBalanceOfItsAccount
 
 	! !
 
-!PortfolioTests methodsFor: 'as yet unclassified' stamp: 'MF 7/6/2021 16:06:59'!
-test03PortfolioKnowsBalanceOfItsManyAccounts
+!PortfolioTests methodsFor: 'as yet unclassified' stamp: 'IE 7/7/2021 22:38:16'!
+test02PortfolioKnowsBalanceOfItsManyAccounts
 	
 	|portfolio accountA accountB| 
 	
@@ -199,8 +173,8 @@ test03PortfolioKnowsBalanceOfItsManyAccounts
 	self deny: (portfolio balance isEqualTo: 5 * peso).
 	! !
 
-!PortfolioTests methodsFor: 'as yet unclassified' stamp: 'MF 7/6/2021 16:07:33'!
-test04PortfolioKnowsBalanceOfInternalAccountsAndPortfolios
+!PortfolioTests methodsFor: 'as yet unclassified' stamp: 'IE 7/7/2021 22:38:20'!
+test03PortfolioKnowsBalanceOfInternalAccountsAndPortfolios
 	
 	|portfolio1 portfolio2 accountA accountB accountC| 
 	
@@ -225,8 +199,8 @@ test04PortfolioKnowsBalanceOfInternalAccountsAndPortfolios
 	self deny: (portfolio2 balance isEqualTo: 5 * peso).
 	! !
 
-!PortfolioTests methodsFor: 'as yet unclassified' stamp: 'MF 7/6/2021 16:16:31'!
-test05PortfolioCanCheckForAccountTransactions
+!PortfolioTests methodsFor: 'as yet unclassified' stamp: 'IE 7/7/2021 22:38:24'!
+test04PortfolioCanCheckForAccountTransactions
 	
 	|portfolio1 portfolio2 accountA accountB|
 	
@@ -246,8 +220,8 @@ test05PortfolioCanCheckForAccountTransactions
 
 	! !
 
-!PortfolioTests methodsFor: 'as yet unclassified' stamp: 'MF 7/7/2021 15:59:45'!
-test06PortfolioCanCheckForAParticularAccountTransaction
+!PortfolioTests methodsFor: 'as yet unclassified' stamp: 'IE 7/7/2021 22:38:30'!
+test05PortfolioCanCheckForAParticularAccountTransaction
 	
 	|portfolio account accountB transaction transactionB|
 	
@@ -267,8 +241,8 @@ test06PortfolioCanCheckForAParticularAccountTransaction
 	self deny: (portfolio hasRegistered: transactionB ).
 	! !
 
-!PortfolioTests methodsFor: 'as yet unclassified' stamp: 'MF 7/6/2021 16:18:27'!
-test07PortfolioCanCheckForPortfolioTransactions
+!PortfolioTests methodsFor: 'as yet unclassified' stamp: 'IE 7/7/2021 22:38:34'!
+test06PortfolioCanCheckForPortfolioTransactions
 	
 	|portfolio1 portfolio2 account |
 	
@@ -285,8 +259,8 @@ test07PortfolioCanCheckForPortfolioTransactions
 	self assert: portfolio1 checkForTransaction.
 	! !
 
-!PortfolioTests methodsFor: 'as yet unclassified' stamp: 'MF 7/7/2021 15:46:30'!
-test08PortfolioKnowsTransactionsOfInternalAccount
+!PortfolioTests methodsFor: 'as yet unclassified' stamp: 'IE 7/7/2021 22:38:38'!
+test07PortfolioKnowsTransactionsOfInternalAccount
 	
 	|portfolio  account |
 	
@@ -300,8 +274,8 @@ test08PortfolioKnowsTransactionsOfInternalAccount
 	self assert: (portfolio checkAccountTransactions: account) equals: account transactions.
 	! !
 
-!PortfolioTests methodsFor: 'as yet unclassified' stamp: 'MF 7/7/2021 15:48:45'!
-test09PortfolioRisesAnErrorIfAskedForTransactionsOfNonInternalAccount
+!PortfolioTests methodsFor: 'as yet unclassified' stamp: 'IE 7/7/2021 22:53:46'!
+test08PortfolioRisesAnErrorIfAskedForTransactionsOfNonInternalAccount
 	
 	|portfolio  account |
 	
@@ -314,10 +288,10 @@ test09PortfolioRisesAnErrorIfAskedForTransactionsOfNonInternalAccount
 	self 
 		should: [portfolio checkAccountTransactions: account]
 		raise: Error
-		withExceptionDo: [ :anError | self assert: anError messageText equals: Portfolio AccountIsNotInPortfolioErrorDescription ].	! !
+		withExceptionDo: [ :anError | self assert: anError messageText equals: Portfolio accountIsNotInPortfolioErrorDescription ].	! !
 
-!PortfolioTests methodsFor: 'as yet unclassified' stamp: 'MF 7/7/2021 16:19:07'!
-test10PortfolioKnowsAllTransactionsOfAnInternalAccount
+!PortfolioTests methodsFor: 'as yet unclassified' stamp: 'IE 7/7/2021 22:38:51'!
+test09PortfolioKnowsAllTransactionsOfAnInternalAccount
 
 	|portfolio  account  transaction|
 	
@@ -331,8 +305,8 @@ test10PortfolioKnowsAllTransactionsOfAnInternalAccount
 	
 	self assert: portfolio transactions equals: account transactions .! !
 
-!PortfolioTests methodsFor: 'as yet unclassified' stamp: 'MF 7/7/2021 16:19:28'!
-test11PortfolioKnowsAllTransactionsOfAllInternalAccounts
+!PortfolioTests methodsFor: 'as yet unclassified' stamp: 'IE 7/7/2021 22:38:57'!
+test10PortfolioKnowsAllTransactionsOfAllInternalAccounts
 
 	|portfolio  accountA accountB transactionA transactionB allTransactions|
 	
@@ -446,80 +420,6 @@ test07AccountKnowsItsTransactions
 ! !
 
 
-!classDefinition: #TransferenceBetweenAccountsTests category: 'ServiciosFinancieros-Ejercicio'!
-TestCase subclass: #TransferenceBetweenAccountsTests
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	category: 'ServiciosFinancieros-Ejercicio'!
-
-!TransferenceBetweenAccountsTests methodsFor: 'tests' stamp: 'IE 7/3/2021 19:42:43'!
-test01AnyAmountOfPesosTransferenceCanBeMade
-
-	| accountA accountB transference amount |
-	
-	accountA := ReceptiveAccount new.
-	accountB := ReceptiveAccount new.
-	amount := 20 * peso.
-	transference := TransferenceBetweenAccounts fromAccount: accountA toAccount: accountB withAmount: amount.
-	self assert: transference getAmount equals: amount.
-	self deny: (transference getAmount isEqualTo: 10*peso).! !
-
-!TransferenceBetweenAccountsTests methodsFor: 'tests' stamp: 'IE 7/3/2021 19:15:06'!
-test03EmittingAccountSuffersAccordingWithdrawalAfterTransference
-
-	| accountA accountB transference amount deposit |
-	
-	amount := 50 * peso.
-	accountA := ReceptiveAccount new.
-	deposit := Deposit register: 50 * peso on: accountA.
-	accountB := ReceptiveAccount new.
-	
-	transference := TransferenceBetweenAccounts fromAccount: accountA toAccount: accountB withAmount: amount.
-	self assert: 0 * peso equals: accountA balance.
-	! !
-
-!TransferenceBetweenAccountsTests methodsFor: 'tests' stamp: 'IE 7/3/2021 18:49:00'!
-test05ReceivingAccountSuffersAccordingDepositAfterTransference
-
-	| accountA accountB transference amount deposit |
-	
-	amount := 50 * peso.
-	accountA := ReceptiveAccount new.
-	deposit := Deposit register: 50 * peso on: accountA.
-	accountB := ReceptiveAccount new.
-	
-	transference := TransferenceBetweenAccounts fromAccount: accountA toAccount: accountB withAmount: amount.
-	self assert: 50 * peso equals: accountB balance.
-	! !
-
-!TransferenceBetweenAccountsTests methodsFor: 'tests' stamp: 'IE 7/3/2021 19:38:40'!
-test07EmittingAccountWithdrawalKnowsItsCounterPart
-
-	| accountA accountB transference amount deposit |
-	
-	amount := 50 * peso.
-	accountA := ReceptiveAccount new.
-	deposit := Deposit register: 50 * peso on: accountA.
-	accountB := ReceptiveAccount new.
-	
-	transference := TransferenceBetweenAccounts fromAccount: accountA toAccount: accountB withAmount: amount.
-	self assert: accountA lastTransaction counterPart equals: accountB lastTransaction.! !
-
-!TransferenceBetweenAccountsTests methodsFor: 'tests' stamp: 'IE 7/3/2021 19:39:06'!
-test08ReceivingAccountDepositKnowsItsCounterPart
-
-	| accountA accountB transference amount deposit |
-	
-	amount := 50 * peso.
-	accountA := ReceptiveAccount new.
-	deposit := Deposit register: 50 * peso on: accountA.
-	accountB := ReceptiveAccount new.
-	
-	transference := TransferenceBetweenAccounts fromAccount: accountA toAccount: accountB withAmount: amount.
-	self assert: accountA lastTransaction counterPart equals: accountB lastTransaction.! !
-
-
 !classDefinition: #TransferenceTests category: 'ServiciosFinancieros-Ejercicio'!
 TestCase subclass: #TransferenceTests
 	instanceVariableNames: ''
@@ -527,16 +427,69 @@ TestCase subclass: #TransferenceTests
 	poolDictionaries: ''
 	category: 'ServiciosFinancieros-Ejercicio'!
 
-!TransferenceTests methodsFor: 'as yet unclassified' stamp: 'IE 7/7/2021 19:38:59'!
-test01
-	| accountA accountB transference |
+!TransferenceTests methodsFor: 'tests' stamp: 'IE 7/7/2021 22:40:47'!
+test01AnyAmountOfPesosTransferenceCanBeMade
+
+	| accountA accountB transference amount |
 	
 	accountA := ReceptiveAccount new.
 	accountB := ReceptiveAccount new.
+	amount := 20 * peso.
+	transference := Transference register: amount from: accountA to: accountB.
+	self assert: transference value equals: amount.
+	self deny: (transference value isEqualTo: 10*peso).! !
+
+!TransferenceTests methodsFor: 'tests' stamp: 'IE 7/7/2021 22:37:33'!
+test02EmittingAccountSuffersAccordingWithdrawalAfterTransference
+
+	| accountA accountB |
 	
-	transference := Transference register: 100 * peso from: accountA to: accountB.
+	accountA := ReceptiveAccount new.
+	Deposit register: 50 * peso on: accountA.
+	accountB := ReceptiveAccount new.
 	
-	self assert: transference value.! !
+	
+	Transference register: 50 * peso  from: accountA to: accountB.
+	self assert: 0 * peso equals: accountA balance.
+	! !
+
+!TransferenceTests methodsFor: 'tests' stamp: 'IE 7/7/2021 22:37:37'!
+test03ReceivingAccountSuffersAccordingDepositAfterTransference
+
+	| accountA accountB |
+	
+	accountA := ReceptiveAccount new.
+	Deposit register: 50 * peso on: accountA.
+	accountB := ReceptiveAccount new.
+	
+	Transference register: 50 * peso from: accountA to: accountB.
+	self assert: 50 * peso equals: accountB balance.
+	! !
+
+!TransferenceTests methodsFor: 'tests' stamp: 'IE 7/7/2021 22:37:42'!
+test04EmittingAccountWithdrawalKnowsItsCounterPart
+
+	| accountA accountB |
+	
+	
+	accountA := ReceptiveAccount new.
+	Deposit register: 50 * peso on: accountA.
+	accountB := ReceptiveAccount new.
+	
+	Transference register: 50 * peso from: accountA to: accountB.
+	self assert: accountA lastTransaction counterPart equals: accountB lastTransaction.! !
+
+!TransferenceTests methodsFor: 'tests' stamp: 'IE 7/7/2021 22:37:46'!
+test05ReceivingAccountDepositKnowsItsCounterPart
+
+	| accountA accountB |
+	
+	accountA := ReceptiveAccount new.
+	Deposit register: 50 * peso on: accountA.
+	accountB := ReceptiveAccount new.
+	
+	Transference register: 50 * peso from: accountA to: accountB.
+	self assert: accountA lastTransaction counterPart equals: accountB lastTransaction.! !
 
 
 !classDefinition: #AccountTransaction category: 'ServiciosFinancieros-Ejercicio'!
@@ -604,53 +557,27 @@ for: aValue
 	^ self new initializeFor: aValue ! !
 
 
-!classDefinition: #DepositForTransferences category: 'ServiciosFinancieros-Ejercicio'!
-AccountTransaction subclass: #DepositForTransferences
-	instanceVariableNames: 'value counterPart'
+!classDefinition: #DepositForTransference category: 'ServiciosFinancieros-Ejercicio'!
+Deposit subclass: #DepositForTransference
+	instanceVariableNames: 'counterPart'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'ServiciosFinancieros-Ejercicio'!
 
-!DepositForTransferences methodsFor: 'as yet unclassified' stamp: 'IE 7/7/2021 20:37:21'!
+!DepositForTransference methodsFor: 'as yet unclassified' stamp: 'IE 7/7/2021 20:37:21'!
 addCounterPart: aCounterPart
 
 	counterPart := aCounterPart.! !
 
-!DepositForTransferences methodsFor: 'as yet unclassified' stamp: 'IE 7/7/2021 20:38:00'!
-addToBalance
-
-	^ value! !
-
-!DepositForTransferences methodsFor: 'as yet unclassified' stamp: 'IE 7/7/2021 20:40:26'!
+!DepositForTransference methodsFor: 'as yet unclassified' stamp: 'IE 7/7/2021 20:40:26'!
 counterPart
 
 	^counterPart.! !
 
-!DepositForTransferences methodsFor: 'as yet unclassified' stamp: 'IE 7/7/2021 20:40:40'!
-initializeFor: aValue
-
-	value := aValue ! !
-
-!DepositForTransferences methodsFor: 'as yet unclassified' stamp: 'IE 7/7/2021 20:40:49'!
-value
-
-	^ value! !
-
-"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
-
-!classDefinition: 'DepositForTransferences class' category: 'ServiciosFinancieros-Ejercicio'!
-DepositForTransferences class
-	instanceVariableNames: ''!
-
-!DepositForTransferences class methodsFor: 'as yet unclassified' stamp: 'IE 7/7/2021 20:41:21'!
-for: aValue
-
-	^ self new initializeFor: aValue ! !
-
 
 !classDefinition: #Withdraw category: 'ServiciosFinancieros-Ejercicio'!
 AccountTransaction subclass: #Withdraw
-	instanceVariableNames: 'value counterPart'
+	instanceVariableNames: 'value'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'ServiciosFinancieros-Ejercicio'!
@@ -661,20 +588,10 @@ initializeFor: aValue
 	value := aValue ! !
 
 
-!Withdraw methodsFor: 'value' stamp: 'IE 7/3/2021 19:34:54'!
-addCounterPart: aCounterPart
-
-	counterPart := aCounterPart.! !
-
 !Withdraw methodsFor: 'value' stamp: 'IE 7/3/2021 16:33:52'!
 addToBalance
 
 	^ (-1)*value! !
-
-!Withdraw methodsFor: 'value' stamp: 'IE 7/3/2021 19:35:20'!
-counterPart
-
-	^counterPart.! !
 
 !Withdraw methodsFor: 'value' stamp: 'HernanWilkinson 7/13/2011 18:33'!
 value
@@ -693,6 +610,24 @@ for: aValue
 	^ self new initializeFor: aValue ! !
 
 
+!classDefinition: #WithdrawForTransference category: 'ServiciosFinancieros-Ejercicio'!
+Withdraw subclass: #WithdrawForTransference
+	instanceVariableNames: 'counterPart'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'ServiciosFinancieros-Ejercicio'!
+
+!WithdrawForTransference methodsFor: 'as yet unclassified' stamp: 'IE 7/7/2021 22:07:46'!
+addCounterPart: aCounterPart
+
+	counterPart := aCounterPart.! !
+
+!WithdrawForTransference methodsFor: 'as yet unclassified' stamp: 'IE 7/7/2021 22:08:05'!
+counterPart
+
+	^counterPart.! !
+
+
 !classDefinition: #Portfolio category: 'ServiciosFinancieros-Ejercicio'!
 Object subclass: #Portfolio
 	instanceVariableNames: 'items parents'
@@ -700,7 +635,7 @@ Object subclass: #Portfolio
 	poolDictionaries: ''
 	category: 'ServiciosFinancieros-Ejercicio'!
 
-!Portfolio methodsFor: 'as yet unclassified' stamp: 'IE 7/7/2021 20:14:49'!
+!Portfolio methodsFor: 'as yet unclassified' stamp: 'IE 7/7/2021 23:33:05'!
 addAccountOrPortfolio: anAccountOrPortfolio
 	|newItemAlreadyInParent newItemAlreadyInSelf index|
 	newItemAlreadyInParent := false.
@@ -709,7 +644,8 @@ addAccountOrPortfolio: anAccountOrPortfolio
 	
 	(parents isEmpty) ifFalse:[	
 		[newItemAlreadyInParent or: (index > parents size)] whileFalse: [ 
-			newItemAlreadyInParent := (parents at: index) checkIfItemIsAlreadyInPortfolio: anAccountOrPortfolio .
+			newItemAlreadyInParent := (parents at: index) checkIfItemIsAlreadyInPortfolio: anAccountOrPortfolio.
+			newItemAlreadyInParent ifTrue: [self error: self class cannotStoreAccountInPortfolioErrorDescription .].
 			index := index + 1.
 			
 			]
@@ -720,21 +656,24 @@ addAccountOrPortfolio: anAccountOrPortfolio
 	(items isEmpty) ifFalse:[
 		[newItemAlreadyInSelf or: (index > items size)] whileFalse:[
 			newItemAlreadyInSelf := anAccountOrPortfolio checkIfItemIsAlreadyInPortfolio: (items at: index) .
+			newItemAlreadyInSelf ifTrue: [self error: self class cannotStoreAccountInPortfolioErrorDescription].
 			index := index + 1.
 			
 			]
 		]].
 	
 	
-	(anAccountOrPortfolio == self) ifFalse: [
+	(anAccountOrPortfolio == self) ifTrue: [self error: self class cannotStoreSelfErrorDescription ].
 		
-	(newItemAlreadyInParent or: newItemAlreadyInSelf )ifFalse: [
+
 		
-	(self checkIfItemIsAlreadyInPortfolio: anAccountOrPortfolio) ifFalse: [	items add: anAccountOrPortfolio.
+	(self checkIfItemIsAlreadyInPortfolio: anAccountOrPortfolio) ifTrue: [	self error: self class cannotStoreAccountInPortfolioErrorDescription ].
+		
+	items add: anAccountOrPortfolio.
 	
-	(anAccountOrPortfolio isKindOf: Portfolio) ifTrue: [anAccountOrPortfolio addParent: self ].]]
+	(anAccountOrPortfolio isKindOf: Portfolio) ifTrue: [anAccountOrPortfolio addParent: self ].
 	
-].
+.
 
 
 ! !
@@ -752,10 +691,10 @@ balance
 
 	^items sum: [ :anAccount | anAccount balance ] ifEmpty: [ 0 ].! !
 
-!Portfolio methodsFor: 'as yet unclassified' stamp: 'MF 7/7/2021 15:45:04'!
+!Portfolio methodsFor: 'as yet unclassified' stamp: 'IE 7/7/2021 22:53:46'!
 checkAccountTransactions: anAccount
 	
-	(self checkIfItemIsAlreadyInPortfolio: anAccount ) ifFalse: [^self error: self class AccountIsNotInPortfolioErrorDescription ].
+	(self checkIfItemIsAlreadyInPortfolio: anAccount ) ifFalse: [^self error: self class accountIsNotInPortfolioErrorDescription ].
 	
 	^anAccount transactions.! !
 
@@ -772,14 +711,14 @@ checkForTransaction
 	
 	^false.! !
 
-!Portfolio methodsFor: 'as yet unclassified' stamp: 'MF 7/6/2021 17:04:07'!
+!Portfolio methodsFor: 'as yet unclassified' stamp: 'IE 7/7/2021 23:18:57'!
 checkIfItemIsAlreadyInPortfolio: anItem
 	|portfolioItem|
 	
 	1 to: items size do: [ :index |
 		portfolioItem := items at: index.
-		portfolioItem == anItem ifTrue: [^true].
-		(portfolioItem isKindOf: Portfolio) ifTrue: [(portfolioItem checkIfItemIsAlreadyInPortfolio: anItem) ifTrue: [^true]].
+		portfolioItem == anItem ifTrue: [^true.].
+		(portfolioItem isKindOf: Portfolio) ifTrue: [(portfolioItem checkIfItemIsAlreadyInPortfolio: anItem) ifTrue: [^true. ]].
 		
 		].
 	
@@ -819,10 +758,20 @@ transactions
 Portfolio class
 	instanceVariableNames: ''!
 
-!Portfolio class methodsFor: 'as yet unclassified' stamp: 'MF 7/7/2021 15:43:51'!
-AccountIsNotInPortfolioErrorDescription
+!Portfolio class methodsFor: 'as yet unclassified' stamp: 'IE 7/7/2021 23:03:40'!
+accountIsNotInPortfolioErrorDescription
 
 	^'Account is not Portfolio'.! !
+
+!Portfolio class methodsFor: 'as yet unclassified' stamp: 'IE 7/7/2021 23:31:01'!
+cannotStoreAccountInPortfolioErrorDescription
+
+	^'cannot store ACCOUNT included in self, internal portfolio or parent portfolio, or PORTFOLIO with same account'.! !
+
+!Portfolio class methodsFor: 'as yet unclassified' stamp: 'IE 7/7/2021 23:09:28'!
+cannotStoreSelfErrorDescription
+
+	^'Portfolio cannot store itself'.! !
 
 
 !classDefinition: #ReceptiveAccount category: 'ServiciosFinancieros-Ejercicio'!
@@ -876,42 +825,34 @@ lastTransaction
 
 !classDefinition: #Transference category: 'ServiciosFinancieros-Ejercicio'!
 Object subclass: #Transference
-	instanceVariableNames: ''
+	instanceVariableNames: 'value'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'ServiciosFinancieros-Ejercicio'!
 
-
-!classDefinition: #TransferenceBetweenAccounts category: 'ServiciosFinancieros-Ejercicio'!
-Object subclass: #TransferenceBetweenAccounts
-	instanceVariableNames: 'amount'
-	classVariableNames: ''
-	poolDictionaries: ''
-	category: 'ServiciosFinancieros-Ejercicio'!
-
-!TransferenceBetweenAccounts methodsFor: 'as yet unclassified' stamp: 'IE 7/3/2021 19:43:12'!
-getAmount 
-
-	^amount.! !
-
-!TransferenceBetweenAccounts methodsFor: 'as yet unclassified' stamp: 'IE 7/7/2021 20:41:04'!
-initializeWithAccountToWithdraw: anAccountToWithdraw andAccountToDeposit: anAccountToDeposit withAmount: anAmount
+!Transference methodsFor: 'as yet unclassified' stamp: 'IE 7/7/2021 22:41:13'!
+initializeWithAccountToWithdrawFrom: anAccountToWithdraw andAccountToDepositIn: anAccountToDeposit withAmount: anAmount
 	
 	|depositTransaction withdrawTransaction |
 	 
-	amount := anAmount.
-	withdrawTransaction := Withdraw register: anAmount on: anAccountToWithdraw.
-	depositTransaction := DepositForTransferences register: anAmount on: anAccountToDeposit.
+	value := anAmount.
+	withdrawTransaction := WithdrawForTransference register: anAmount on: anAccountToWithdraw.
+	depositTransaction := DepositForTransference register: anAmount on: anAccountToDeposit.
 	depositTransaction addCounterPart: withdrawTransaction.
 	withdrawTransaction addCounterPart: depositTransaction.! !
 
+!Transference methodsFor: 'as yet unclassified' stamp: 'IE 7/7/2021 22:41:13'!
+value 
+
+	^value.! !
+
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
-!classDefinition: 'TransferenceBetweenAccounts class' category: 'ServiciosFinancieros-Ejercicio'!
-TransferenceBetweenAccounts class
+!classDefinition: 'Transference class' category: 'ServiciosFinancieros-Ejercicio'!
+Transference class
 	instanceVariableNames: ''!
 
-!TransferenceBetweenAccounts class methodsFor: 'as yet unclassified' stamp: 'IE 7/3/2021 17:32:43'!
-fromAccount: accountToWithdraw toAccount: accountToDeposit withAmount: amount
+!Transference class methodsFor: 'as yet unclassified' stamp: 'IE 7/7/2021 22:32:53'!
+register: anAmount from: accountToWithdrawFrom to: accountToDepositIn
 
-	^TransferenceBetweenAccounts new initializeWithAccountToWithdraw: accountToWithdraw andAccountToDeposit: accountToDeposit withAmount: amount.! !
+	^Transference new initializeWithAccountToWithdrawFrom: accountToWithdrawFrom andAccountToDepositIn: accountToDepositIn withAmount: anAmount.! !
