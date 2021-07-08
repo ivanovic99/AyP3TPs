@@ -276,21 +276,30 @@ test03ReceivingAccountSuffersAccordingDepositAfterTransference
 	self assert: 50 * peso equals: account2 balance.
 	! !
 
-!TransferenceTests methodsFor: 'tests' stamp: 'MF 7/8/2021 16:53:22'!
+!TransferenceTests methodsFor: 'tests' stamp: 'MF 7/8/2021 17:30:25'!
 test04EmittingAccountWithdrawalKnowsItsCounterPart
 
 	Deposit register: 50 * peso on: account1.
 	
 	Transference register: 50 * peso from: account1 to: account2.
-	self assert: account1 lastTransaction counterPart equals: account2 lastTransaction.! !
+	self assert: account1 lastTransaction counterPart equals: account2 lastTransaction.
+	
+	Deposit register: 10 * peso on: account2.
+	self deny: (account1 lastTransaction counterPart isEqualTo: account2 lastTransaction).
 
-!TransferenceTests methodsFor: 'tests' stamp: 'MF 7/8/2021 16:53:43'!
+! !
+
+!TransferenceTests methodsFor: 'tests' stamp: 'MF 7/8/2021 17:33:59'!
 test05ReceivingAccountDepositKnowsItsCounterPart
 	
 	Deposit register: 50 * peso on: account1.
 	
 	Transference register: 50 * peso from: account1 to: account2.
-	self assert: account1 lastTransaction counterPart equals: account2 lastTransaction.! !
+	
+	self assert: account2 lastTransaction counterPart equals: account1 lastTransaction.
+	
+	Deposit register: 10 * peso on: account1.
+	self deny: (account2 lastTransaction counterPart isEqualTo: account1 lastTransaction).! !
 
 
 !TransferenceTests methodsFor: 'setup' stamp: 'MF 7/8/2021 16:50:42'!
@@ -549,6 +558,34 @@ Object subclass: #AccountType
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'ServiciosFinancieros-Ejercicio'!
+
+!AccountType methodsFor: 'as yet unclassified' stamp: 'MF 7/8/2021 17:36:39'!
+addParent: aParentPortfolio
+ 	self subclassResponsibility.! !
+
+!AccountType methodsFor: 'as yet unclassified' stamp: 'MF 7/8/2021 17:38:25'!
+balance
+ 	self subclassResponsibility.! !
+
+!AccountType methodsFor: 'as yet unclassified' stamp: 'MF 7/8/2021 17:36:54'!
+checkForTransaction
+ 	self subclassResponsibility.! !
+
+!AccountType methodsFor: 'as yet unclassified' stamp: 'MF 7/8/2021 17:37:08'!
+checkIfItemIsAlreadyInPortfolio: anItem
+ 	self subclassResponsibility.! !
+
+!AccountType methodsFor: 'as yet unclassified' stamp: 'MF 7/8/2021 17:39:11'!
+hasRegistered: aTransaction
+ 	self subclassResponsibility.! !
+
+!AccountType methodsFor: 'as yet unclassified' stamp: 'MF 7/8/2021 17:37:25'!
+lookForAllTheItemsOf: collectionToGoThrough in: anAccountOrPortfolio andIfOneIsFoundThrow: anError
+ 	self subclassResponsibility.! !
+
+!AccountType methodsFor: 'as yet unclassified' stamp: 'MF 7/8/2021 17:40:17'!
+transactions 
+ 	self subclassResponsibility.! !
 
 
 !classDefinition: #Portfolio category: 'ServiciosFinancieros-Ejercicio'!
