@@ -164,8 +164,8 @@ TestCase subclass: #PortfolioDetailedTreePrinterTests
 	poolDictionaries: ''
 	category: 'ServiciosFinancieros-Solucion'!
 
-!PortfolioDetailedTreePrinterTests methodsFor: 'as yet unclassified' stamp: 'MF 7/15/2021 18:42:45'!
-test01
+!PortfolioDetailedTreePrinterTests methodsFor: 'as yet unclassified' stamp: 'MF 7/15/2021 18:49:50'!
+test01EmptyPortfolioDetailedTree
 	|portfolio result |
 	portfolio  := Portfolio named: 'Portfolio A'.
 	
@@ -177,21 +177,8 @@ test01
 	self assert: (PortfolioDetailedTreePrinter for: portfolio) equals: result.
 ! !
 
-!PortfolioDetailedTreePrinterTests methodsFor: 'as yet unclassified' stamp: 'MF 7/15/2021 18:42:42'!
-test02
-	|portfolio result |
-	portfolio  := Portfolio named: 'Portfolio B'.
-	
-	result  := OrderedCollection new.
-	result add: 'Portfolio B'.
-	result add: '    Balance = 0'.
-	
-
-	self assert: (PortfolioDetailedTreePrinter for: portfolio) equals: result.
-! !
-
-!PortfolioDetailedTreePrinterTests methodsFor: 'as yet unclassified' stamp: 'MF 7/15/2021 18:42:38'!
-test03
+!PortfolioDetailedTreePrinterTests methodsFor: 'as yet unclassified' stamp: 'MF 7/15/2021 18:50:29'!
+test02PortfolioDetailedTreeWithAnAccount
 	|portfolio result account |
 	portfolio  := Portfolio named: 'Portfolio B'.
 	account := ReceptiveAccount  named: 'La Cuenta De Juan'.
@@ -208,23 +195,8 @@ test03
 
 ! !
 
-!PortfolioDetailedTreePrinterTests methodsFor: 'as yet unclassified' stamp: 'MF 7/15/2021 18:42:32'!
-test04
-	|portfolio result account |
-	portfolio  := Portfolio named: 'Portfolio B'.
-	account := ReceptiveAccount  named: 'La Cuenta De Nico'.
-	portfolio add: account .
-	
-	result  := OrderedCollection new.
-	result add: 'Portfolio B'.
-	result add: '    La Cuenta De Nico'.
-	result add: '        Balance = 0 pesos'.
-	result add: '    Balance = 0 pesos'.
-	self assert: (PortfolioDetailedTreePrinter for: portfolio) equals: result.
-! !
-
-!PortfolioDetailedTreePrinterTests methodsFor: 'as yet unclassified' stamp: 'MF 7/15/2021 18:42:28'!
-test05
+!PortfolioDetailedTreePrinterTests methodsFor: 'as yet unclassified' stamp: 'MF 7/15/2021 18:51:00'!
+test03PortfolioDetailedTreePrinterWithManyAccounts
 	|portfolio result account account2|
 	portfolio  := Portfolio named: 'Portfolio B'.
 	account := ReceptiveAccount  named: 'La Cuenta De Nico'.
@@ -246,8 +218,8 @@ test05
 	self assert: (PortfolioDetailedTreePrinter for: portfolio) equals: result.
 ! !
 
-!PortfolioDetailedTreePrinterTests methodsFor: 'as yet unclassified' stamp: 'MF 7/15/2021 18:42:25'!
-test06
+!PortfolioDetailedTreePrinterTests methodsFor: 'as yet unclassified' stamp: 'MF 7/15/2021 18:51:28'!
+test04PortfolioDetailedTreePrinterWithPortfolioWithAccount
 	|portfolio result account  portfolioB|
 	portfolio  := Portfolio named: 'Portfolio A'.
 	portfolioB  := Portfolio named: 'Portfolio B'.
@@ -268,8 +240,8 @@ test06
 	self assert: (PortfolioDetailedTreePrinter for: portfolio) equals: result.
 ! !
 
-!PortfolioDetailedTreePrinterTests methodsFor: 'as yet unclassified' stamp: 'MF 7/15/2021 18:42:21'!
-test07
+!PortfolioDetailedTreePrinterTests methodsFor: 'as yet unclassified' stamp: 'MF 7/15/2021 18:51:48'!
+test05PortfolioDetailedTreePrinterWithPortfolioWithManyAccounts
 	|portfolio result account  account2 portfolioB|
 	portfolio  := Portfolio named: 'Portfolio A'.
 	portfolioB  := Portfolio named: 'Portfolio B'.
@@ -296,8 +268,8 @@ test07
 	self assert: (PortfolioDetailedTreePrinter for: portfolio) equals: result.
 ! !
 
-!PortfolioDetailedTreePrinterTests methodsFor: 'as yet unclassified' stamp: 'MF 7/15/2021 18:42:16'!
-test08
+!PortfolioDetailedTreePrinterTests methodsFor: 'as yet unclassified' stamp: 'MF 7/15/2021 18:52:11'!
+test06PortfolioDetailedTreePrinterWithAccountWithTransactions
 	|portfolio result account  |
 	portfolio  := Portfolio named: 'Portfolio A'.
 	account := ReceptiveAccount named: 'La Cuenta de Gaby'.
@@ -316,58 +288,8 @@ test08
 	self assert: (PortfolioDetailedTreePrinter for: portfolio) equals: result.
 ! !
 
-!PortfolioDetailedTreePrinterTests methodsFor: 'as yet unclassified' stamp: 'MF 7/15/2021 18:42:13'!
-test09
-	|portfolio result account  |
-	portfolio  := Portfolio named: 'Portfolio A'.
-	account := ReceptiveAccount named: 'La Cuenta de Gaby'.
-	
-	portfolio add: account .
-	Deposit register: 10 * peso on: account .
-	result  := OrderedCollection new.
-	result add: 'Portfolio A'.
-	result add: '    La Cuenta de Gaby'.
-	result add: '        Depósito por 10 pesos'.
-	result add: '        Balance = 10 pesos'.
-	result add: '    Balance = 10 pesos'.
-
-
-	self assert: (PortfolioDetailedTreePrinter for: portfolio) equals: result.
-! !
-
-!PortfolioDetailedTreePrinterTests methodsFor: 'as yet unclassified' stamp: 'MF 7/15/2021 18:42:07'!
-test10
-	|portfolio result account portfolioB account2  |
-	portfolio  := Portfolio named: 'Portfolio A'.
-	portfolioB  := Portfolio named: 'Portfolio B'.
-
-	account := ReceptiveAccount named: 'La Cuenta de Gaby'.
-	account2 := ReceptiveAccount named: 'La Cuenta de Mauro'.
-	
-	portfolio add: account .
-	portfolio add: portfolioB .
-	portfolioB add: account2 .
-	
-	Deposit register: 10 * peso on: account .
-	Withdraw register: 20 * peso on: account2 .
-	result  := OrderedCollection new.
-	result add: 'Portfolio A'.
-	result add: '    La Cuenta de Gaby'.
-	result add: '        Depósito por 10 pesos'.
-	result add: '        Balance = 10 pesos'.
-	result add: '    Portfolio B'.
-	result add: '        La Cuenta de Mauro'.
-	result add: '            Extracción por 20 pesos'.
-	result add: '            Balance = -20 pesos'.
-	result add: '        Balance = -20 pesos'.
-	result add: '    Balance = -10 pesos'.
-
-
-	self assert: (PortfolioDetailedTreePrinter for: portfolio) equals: result.
-! !
-
-!PortfolioDetailedTreePrinterTests methodsFor: 'as yet unclassified' stamp: 'MF 7/15/2021 18:29:36'!
-test11PATRON
+!PortfolioDetailedTreePrinterTests methodsFor: 'as yet unclassified' stamp: 'MF 7/15/2021 18:53:12'!
+test07PortfolioDetailedTreePrinterWithManyAccountsWithManyTransactions
 	|portfolio result account portfolioB account2  |
 	portfolio  := Portfolio named: 'Portfolio A'.
 	portfolioB  := Portfolio named: 'Portfolio B'.
@@ -1587,7 +1509,7 @@ addReceptiveAccount: anAccount withIndentation: anIndentation
 attachPortfolioWithAccounts: accounts
 	^self detailedTreePrinterWithDepth: 1 forPortfolioWithAccounts: accounts .! !
 
-!PortfolioDetailedTreePrinter class methodsFor: 'as yet unclassified' stamp: 'MF 7/15/2021 18:48:59'!
+!PortfolioDetailedTreePrinter class methodsFor: 'as yet unclassified' stamp: 'MF 7/15/2021 18:56:25'!
 detailedTreePrinterWithDepth: aDepth forPortfolioWithAccounts: accounts
 
 |detailedTree tab indentation accountSummary portfolioAccounts|
@@ -1599,7 +1521,8 @@ detailedTreePrinterWithDepth: aDepth forPortfolioWithAccounts: accounts
 	indentation :=  indentation append: tab ].
 
 	accounts do:[:anAccount|
-		"(anAccount isKindOf: ReceptiveAccount ) ifTrue: [detailedTree addAll: (anAccount addToDetailedTreePrinter: self withIndentation: indentation)] ."
+		"detailedTree addAll: (anAccount addToDetailedTreePrinter: self withIndentation: indentation) ."
+		"Este addToDetailedTreePrinter seria el mensaje polimorfico que nos falto para terminar"
 		
 		(anAccount isKindOf: ReceptiveAccount ) ifTrue: [
 			detailedTree add:( indentation append: anAccount name).
