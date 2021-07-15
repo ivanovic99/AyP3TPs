@@ -157,6 +157,153 @@ test04TransferNetDetectsMultipleTransferTransactions
 	self assert: (TransferNet for: account5) equals: 10 * peso.! !
 
 
+!classDefinition: #PortfolioDetailedTreePrinterTests category: 'ServiciosFinancieros-Solucion'!
+TestCase subclass: #PortfolioDetailedTreePrinterTests
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'ServiciosFinancieros-Solucion'!
+
+!PortfolioDetailedTreePrinterTests methodsFor: 'as yet unclassified' stamp: 'MF 7/14/2021 19:35:56'!
+test01
+	|portfolio result |
+	portfolio  := Portfolio named: 'Portfolio A'.
+	
+	result  := OrderedCollection new.
+	result add: 'Portfolio A'.
+	self assert: portfolio detailedTreePrinter equals: result.
+! !
+
+!PortfolioDetailedTreePrinterTests methodsFor: 'as yet unclassified' stamp: 'MF 7/14/2021 19:37:40'!
+test02
+	|portfolio result |
+	portfolio  := Portfolio named: 'Portfolio B'.
+	
+	result  := OrderedCollection new.
+	result add: 'Portfolio B'.
+	self assert: portfolio detailedTreePrinter equals: result.
+! !
+
+!PortfolioDetailedTreePrinterTests methodsFor: 'as yet unclassified' stamp: 'MF 7/14/2021 19:40:08'!
+test03
+	|portfolio result account |
+	portfolio  := Portfolio named: 'Portfolio B'.
+	account := ReceptiveAccount  named: 'La Cuenta De Juan'.
+	portfolio add: account .
+	
+	result  := OrderedCollection new.
+	result add: 'Portfolio B'.
+	result add: '    La Cuenta De Juan'.
+
+	self assert: portfolio detailedTreePrinter equals: result.
+! !
+
+!PortfolioDetailedTreePrinterTests methodsFor: 'as yet unclassified' stamp: 'MF 7/14/2021 19:42:08'!
+test04
+	|portfolio result account |
+	portfolio  := Portfolio named: 'Portfolio B'.
+	account := ReceptiveAccount  named: 'La Cuenta De Nico'.
+	portfolio add: account .
+	
+	result  := OrderedCollection new.
+	result add: 'Portfolio B'.
+	result add: '    La Cuenta De Nico'.
+
+	self assert: portfolio detailedTreePrinter equals: result.
+! !
+
+!PortfolioDetailedTreePrinterTests methodsFor: 'as yet unclassified' stamp: 'MF 7/14/2021 19:45:20'!
+test05
+	|portfolio result account account2|
+	portfolio  := Portfolio named: 'Portfolio B'.
+	account := ReceptiveAccount  named: 'La Cuenta De Nico'.
+	account2 := ReceptiveAccount  named: 'La Cuenta De Ivan'.
+
+	portfolio add: account .
+	portfolio add: account2 .
+
+	
+	result  := OrderedCollection new.
+	result add: 'Portfolio B'.
+	result add: '    La Cuenta De Nico'.
+	result add: '    La Cuenta De Ivan'.
+
+
+	self assert: portfolio detailedTreePrinter equals: result.
+! !
+
+!PortfolioDetailedTreePrinterTests methodsFor: 'as yet unclassified' stamp: 'MF 7/14/2021 19:49:14'!
+test06
+	|portfolio result account  portfolioB|
+	portfolio  := Portfolio named: 'Portfolio A'.
+	portfolioB  := Portfolio named: 'Portfolio B'.
+	account := ReceptiveAccount named: 'La Cuenta de Gaby'.
+	
+	portfolio add: portfolioB .
+	portfolioB add: account .
+
+	
+	result  := OrderedCollection new.
+	result add: 'Portfolio A'.
+	result add: '    Portfolio B'.
+	result add: '        La Cuenta de Gaby'.
+
+
+
+	self assert: portfolio detailedTreePrinter equals: result.
+! !
+
+!PortfolioDetailedTreePrinterTests methodsFor: 'as yet unclassified' stamp: 'MF 7/14/2021 22:03:20'!
+test07
+	|portfolio result account  account2 portfolioB|
+	portfolio  := Portfolio named: 'Portfolio A'.
+	portfolioB  := Portfolio named: 'Portfolio B'.
+	account := ReceptiveAccount named: 'La Cuenta de Gaby'.
+	account2 := ReceptiveAccount named: 'La Cuenta de Jorge'.
+	
+	portfolio add: portfolioB .
+	portfolioB add: account .
+	portfolioB add: account2 .
+	
+	result  := OrderedCollection new.
+	result add: 'Portfolio A'.
+	result add: '    Portfolio B'.
+	result add: '        La Cuenta de Gaby'.
+	result add: '        La Cuenta de Jorge'.
+
+	self assert: portfolio detailedTreePrinter equals: result.
+! !
+
+!PortfolioDetailedTreePrinterTests methodsFor: 'as yet unclassified' stamp: 'MF 7/14/2021 22:06:14'!
+test08
+	|portfolio  result account  account2 portfolioB account3 portfolioC |
+	portfolio  := Portfolio named: 'Portfolio A'.
+	portfolioB  := Portfolio named: 'Portfolio B'.
+	portfolioC  := Portfolio named: 'Portfolio C'.
+
+	account := ReceptiveAccount named: 'La Cuenta de Gaby'.
+	account2 := ReceptiveAccount named: 'La Cuenta de Jorge'.
+	account3 := ReceptiveAccount named: 'La Cuenta de Papo'.
+
+	portfolio add: portfolioB .
+	portfolioB add: account .
+	portfolioB add: account2 .
+	
+	portfolio add: portfolioC .
+	portfolioC add: account3 .
+
+	result  := OrderedCollection new.
+	result add: 'Portfolio A'.
+	result add: '    Portfolio B'.
+	result add: '        La Cuenta de Gaby'.
+	result add: '        La Cuenta de Jorge'.
+	result add: '    Portfolio C'.
+	result add: '        La Cuenta de Papo'.
+
+	self assert: portfolio detailedTreePrinter equals: result.
+! !
+
+
 !classDefinition: #PortfolioTest category: 'ServiciosFinancieros-Solucion'!
 TestCase subclass: #PortfolioTest
 	instanceVariableNames: ''
@@ -407,7 +554,7 @@ test02
 	self assert: portfolio treePrinter equals: result.
 	self deny: (portfolio treePrinter isEqualTo: incorrectResult ).! !
 
-!PortfolioTreePrinterTests methodsFor: 'as yet unclassified' stamp: 'MF 7/13/2021 23:01:30'!
+!PortfolioTreePrinterTests methodsFor: 'as yet unclassified' stamp: 'MF 7/14/2021 19:40:25'!
 test03
 	|account portfolio result |
 	
@@ -499,7 +646,7 @@ test07
 	self assert: portfolio treePrinter equals: result.
 ! !
 
-!PortfolioTreePrinterTests methodsFor: 'as yet unclassified' stamp: 'MF 7/13/2021 23:31:24'!
+!PortfolioTreePrinterTests methodsFor: 'as yet unclassified' stamp: 'MF 7/13/2021 23:32:30'!
 test08
 	|portfolio account account2 portfolioB portfolioC result |
 	
@@ -512,13 +659,11 @@ test08
 	result  := OrderedCollection new.
 	
 	result add: 'Portfolio A'.
-	
 	result add: ('    ' append: 'Portfolio B') .
 	result add: ('        ' append: 'Cuenta de Sergio') .
 	result add: ('        ' append: 'Portfolio C') .
 	result add: ('            ' append: 'Cuenta de Lucho') .
 
-	
 	self assert: portfolio treePrinter equals: result.
 ! !
 
@@ -765,11 +910,12 @@ Account subclass: #Portfolio
 	poolDictionaries: ''
 	category: 'ServiciosFinancieros-Solucion'!
 
-!Portfolio methodsFor: 'initialization' stamp: 'HAW 5/25/2019 12:03:18'!
+!Portfolio methodsFor: 'initialization' stamp: 'MF 7/14/2021 19:26:22'!
 initialize
 
 	accounts := OrderedCollection new.
-	parents := OrderedCollection new.! !
+	parents := OrderedCollection new.
+	name := 'Unnamed Portfolio'.! !
 
 !Portfolio methodsFor: 'initialization' stamp: 'MF 7/13/2021 22:10:52'!
 setName: aName
@@ -873,34 +1019,66 @@ signalCanNotAddAccount
 	self error: self class canNotAddAccountErrorMessage! !
 
 
+!Portfolio methodsFor: 'as yet unclassified' stamp: 'MF 7/14/2021 22:01:44'!
+detailedTreePrinter
+	|detailedTree tab|
+	tab := '    '.
+	detailedTree := OrderedCollection new.
+	detailedTree add: name.
+	accounts do:[:anAccount|
+		detailedTree add:( tab append: anAccount name).
+		(anAccount isKindOf: Portfolio) ifTrue: [detailedTree addAll: (anAccount detailedTreePrinterWithDepth: 2) ].
+		].
+	^detailedTree.! !
+
+!Portfolio methodsFor: 'as yet unclassified' stamp: 'IE 7/14/2021 22:56:14'!
+detailedTreePrinterWithDepth: aDepth
+	|detailedTree tab indentation|
+	tab := '    '.
+	indentation := ''.
+	detailedTree := OrderedCollection new.
+
+	1 to: aDepth do:[:i|
+	indentation :=  indentation append: tab ].
+
+	accounts do:[:anAccount|
+		detailedTree add:( indentation append: anAccount name).
+		"AGREGAR TEST 3 O MAS"
+		(anAccount isKindOf: Portfolio) ifTrue: [detailedTree addAll: (anAccount detailedTreePrinterWithDepth: (aDepth +1)) ].
+		].
+	^detailedTree.! !
+
 !Portfolio methodsFor: 'as yet unclassified' stamp: 'MF 7/13/2021 23:09:08'!
 name
 	^name! !
 
-!Portfolio methodsFor: 'as yet unclassified' stamp: 'MF 7/13/2021 23:25:43'!
+!Portfolio methodsFor: 'as yet unclassified' stamp: 'MF 7/14/2021 19:30:57'!
 treePrinter
-	|tree |
-	
+	|tree tab|	
+	"El tab lo hacemos con 4 espacios porque apretar la tecla Tab no funcionaba como esperabamos"
 	tree := OrderedCollection new.
-
+	tab := '    '.
 	tree add: name.
 
 	accounts do: [ :anAccount |
-		tree add: ('    ' append: (anAccount name)).
+		tree add: (tab append: (anAccount name)).
 		(anAccount isKindOf: Portfolio) ifTrue: [tree addAll: (anAccount treePrinterWithDepth: 2)]
 		].
 	^tree.
 	
 ! !
 
-!Portfolio methodsFor: 'as yet unclassified' stamp: 'MF 7/13/2021 23:28:23'!
+!Portfolio methodsFor: 'as yet unclassified' stamp: 'MF 7/14/2021 19:31:03'!
 treePrinterWithDepth: aDepth
-	|tree indentation |
+	|tree indentation tab |
+	"El tab lo hacemos con 4 espacios porque apretar la tecla Tab no funcionaba como esperabamos"
+
 	indentation := ''.
 	tree := OrderedCollection new.
-	
+	tab := '    '.
+
 	1 to: aDepth do:[:i|
-		indentation :=  indentation append: '    ' ].
+		indentation :=  indentation append: tab ].
 
 	accounts do: [ :anAccount |
 		tree add: (indentation append: (anAccount name)).
@@ -974,11 +1152,12 @@ Account subclass: #ReceptiveAccount
 	poolDictionaries: ''
 	category: 'ServiciosFinancieros-Solucion'!
 
-!ReceptiveAccount methodsFor: 'initialization' stamp: 'HernanWilkinson 7/13/2011 18:35'!
+!ReceptiveAccount methodsFor: 'initialization' stamp: 'MF 7/14/2021 19:26:13'!
 initialize
 
 	super initialize.
-	transactions := OrderedCollection new.! !
+	transactions := OrderedCollection new.
+	name := 'Unnamed Account'.! !
 
 !ReceptiveAccount methodsFor: 'initialization' stamp: 'IE 7/13/2021 22:07:46'!
 initializeWithName: aName
