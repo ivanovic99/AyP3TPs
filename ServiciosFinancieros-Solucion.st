@@ -5,16 +5,16 @@ TestCase subclass: #AccountSummaryTests
 	poolDictionaries: ''
 	category: 'ServiciosFinancieros-Solucion'!
 
-!AccountSummaryTests methodsFor: 'tests' stamp: 'IE 7/13/2021 19:47:29'!
+!AccountSummaryTests methodsFor: 'tests' stamp: 'MF 7/15/2021 17:34:40'!
 test01SummaryForNewAccountOnlyDisplaysBalance
 	| account result |
 	
 	account := ReceptiveAccount new.
 	result := OrderedCollection new.
 	result add: 'Balance = 0 pesos'.
-	self assert: (Summary for: account) equals: result.! !
+	self assert: (AccountSummary for: account) equals: result.! !
 
-!AccountSummaryTests methodsFor: 'tests' stamp: 'IE 7/13/2021 19:55:07'!
+!AccountSummaryTests methodsFor: 'tests' stamp: 'MF 7/15/2021 17:34:40'!
 test02SummaryDisplaysDeposit
 	| account result incorrectResult |
 	
@@ -24,14 +24,14 @@ test02SummaryDisplaysDeposit
 	result := OrderedCollection new.
 	result add: 'Depósito por 10 pesos'.
 	result add: 'Balance = 10 pesos'.
-	self assert: (Summary for: account) equals: result.
+	self assert: (AccountSummary for: account) equals: result.
 	
 	incorrectResult := OrderedCollection new.
 	incorrectResult add: 'Depósito por 20 pesos'.
 	incorrectResult add: 'Balance = 20 pesos'.
-	self deny: ((Summary for: account) isEqualTo: incorrectResult).! !
+	self deny: ((AccountSummary for: account) isEqualTo: incorrectResult).! !
 
-!AccountSummaryTests methodsFor: 'tests' stamp: 'IE 7/13/2021 19:57:39'!
+!AccountSummaryTests methodsFor: 'tests' stamp: 'MF 7/15/2021 17:34:40'!
 test03SummaryDisplaysWithdraw
 	| account result incorrectResult |
 	
@@ -40,14 +40,14 @@ test03SummaryDisplaysWithdraw
 	result := OrderedCollection new.
 	result add: 'Extracción por 20 pesos'.
 	result add: 'Balance = -20 pesos'.
-	self assert: (Summary for: account) equals: result.
+	self assert: (AccountSummary for: account) equals: result.
 	
 	incorrectResult := OrderedCollection new.
 	incorrectResult add: 'Extraccion por 10 pesos'.
 	incorrectResult add: 'Balance = -10 pesos'.
-	self deny: ((Summary for: account) isEqualTo: incorrectResult).! !
+	self deny: ((AccountSummary for: account) isEqualTo: incorrectResult).! !
 
-!AccountSummaryTests methodsFor: 'tests' stamp: 'IE 7/13/2021 20:03:12'!
+!AccountSummaryTests methodsFor: 'tests' stamp: 'MF 7/15/2021 17:34:40'!
 test04SummaryDisplaysTransferWithdrawLeg
 	| account5 account6 result incorrectResult |
 	
@@ -57,14 +57,14 @@ test04SummaryDisplaysTransferWithdrawLeg
 	result := OrderedCollection new.
 	result add: 'Salida por transferencia de 10 pesos'.
 	result add: 'Balance = -10 pesos'.
-	self assert: (Summary for: account5) equals: result.
+	self assert: (AccountSummary for: account5) equals: result.
 	
 	incorrectResult := OrderedCollection new.
 	incorrectResult add: 'Salida por transferencia de 100 pesos'.
 	incorrectResult add: 'Balance = -100 pesos'.
-	self deny: ((Summary for: account5) isEqualTo: incorrectResult).! !
+	self deny: ((AccountSummary for: account5) isEqualTo: incorrectResult).! !
 
-!AccountSummaryTests methodsFor: 'tests' stamp: 'IE 7/13/2021 20:05:54'!
+!AccountSummaryTests methodsFor: 'tests' stamp: 'MF 7/15/2021 17:34:40'!
 test05SummaryDisplaysTransferDepositLeg
 	| account5 account6 result incorrectResult|
 	
@@ -74,14 +74,14 @@ test05SummaryDisplaysTransferDepositLeg
 	result := OrderedCollection new.
 	result add: 'Entrada por transferencia de 10 pesos'.
 	result add: 'Balance = 10 pesos'.
-	self assert: (Summary for: account6) equals: result.
+	self assert: (AccountSummary for: account6) equals: result.
 	
 	incorrectResult := OrderedCollection new.
 	incorrectResult add: 'Entrada por transferencia de 100 pesos'.
 	incorrectResult add: 'Balance = -100 pesos'.
-	self deny: ((Summary for: account6) isEqualTo: incorrectResult).! !
+	self deny: ((AccountSummary for: account6) isEqualTo: incorrectResult).! !
 
-!AccountSummaryTests methodsFor: 'tests' stamp: 'IE 7/13/2021 20:07:30'!
+!AccountSummaryTests methodsFor: 'tests' stamp: 'MF 7/15/2021 17:34:40'!
 test06SummaryDisplaysMultipleTransactions
 	| account5 account6 result |
 	
@@ -104,7 +104,7 @@ test06SummaryDisplaysMultipleTransactions
 	result add: 'Balance = 10 pesos'.
 	
 	
-	self assert: (Summary for: account6) equals: result.! !
+	self assert: (AccountSummary for: account6) equals: result.! !
 
 
 !classDefinition: #AccountTransferNetTests category: 'ServiciosFinancieros-Solucion'!
@@ -114,15 +114,15 @@ TestCase subclass: #AccountTransferNetTests
 	poolDictionaries: ''
 	category: 'ServiciosFinancieros-Solucion'!
 
-!AccountTransferNetTests methodsFor: 'tests' stamp: 'IE 7/13/2021 20:10:28'!
+!AccountTransferNetTests methodsFor: 'tests' stamp: 'MF 7/15/2021 17:35:07'!
 test01TransferNetForNewAccountIsZeroPesos
 
 	|account|
 	
 	account := ReceptiveAccount new.
-	self assert: (TransferNet for: account) equals: 0 * peso.! !
+	self assert: (AccountTransferNet for: account) equals: 0 * peso.! !
 
-!AccountTransferNetTests methodsFor: 'tests' stamp: 'IE 7/13/2021 20:15:47'!
+!AccountTransferNetTests methodsFor: 'tests' stamp: 'MF 7/15/2021 17:35:08'!
 test02TransferNetDetectsTransferWithdrawLeg
 
 	|account5 account6|
@@ -130,10 +130,10 @@ test02TransferNetDetectsTransferWithdrawLeg
 	account5 := ReceptiveAccount new.
 	account6 := ReceptiveAccount new.
 	Transfer amount: 10 * peso from: account5 to: account6.
-	self assert:(TransferNet for: account5) equals: -10 * peso.
-	self deny: ((TransferNet for: account5) isEqualTo: 10 * peso).! !
+	self assert:(AccountTransferNet for: account5) equals: -10 * peso.
+	self deny: ((AccountTransferNet for: account5) isEqualTo: 10 * peso).! !
 
-!AccountTransferNetTests methodsFor: 'tests' stamp: 'IE 7/13/2021 20:15:58'!
+!AccountTransferNetTests methodsFor: 'tests' stamp: 'MF 7/15/2021 17:35:07'!
 test03TransferNetDetectsTransferDepositLeg
 
 	|account5 account6|
@@ -141,10 +141,10 @@ test03TransferNetDetectsTransferDepositLeg
 	account5 := ReceptiveAccount new.
 	account6 := ReceptiveAccount new.
 	Transfer amount: 20 * peso from: account6 to: account5.
-	self assert: (TransferNet for: account5) equals: 20 * peso.
-	self deny: ((TransferNet for: account5) isEqualTo: 10 * peso).! !
+	self assert: (AccountTransferNet for: account5) equals: 20 * peso.
+	self deny: ((AccountTransferNet for: account5) isEqualTo: 10 * peso).! !
 
-!AccountTransferNetTests methodsFor: 'tests' stamp: 'IE 7/13/2021 20:14:44'!
+!AccountTransferNetTests methodsFor: 'tests' stamp: 'MF 7/15/2021 17:35:07'!
 test04TransferNetDetectsMultipleTransferTransactions
 
 	|account5 account6|
@@ -154,7 +154,7 @@ test04TransferNetDetectsMultipleTransferTransactions
 	Transfer amount: 20 * peso from: account6 to: account5.
 	Transfer amount: 10 * peso from: account6 to: account5.
 	Transfer amount: 20 * peso from: account5 to: account6.
-	self assert: (TransferNet for: account5) equals: 10 * peso.! !
+	self assert: (AccountTransferNet for: account5) equals: 10 * peso.! !
 
 
 !classDefinition: #PortfolioDetailedTreePrinterTests category: 'ServiciosFinancieros-Solucion'!
@@ -164,27 +164,33 @@ TestCase subclass: #PortfolioDetailedTreePrinterTests
 	poolDictionaries: ''
 	category: 'ServiciosFinancieros-Solucion'!
 
-!PortfolioDetailedTreePrinterTests methodsFor: 'as yet unclassified' stamp: 'MF 7/14/2021 19:35:56'!
+!PortfolioDetailedTreePrinterTests methodsFor: 'as yet unclassified' stamp: 'MF 7/15/2021 18:42:45'!
 test01
 	|portfolio result |
 	portfolio  := Portfolio named: 'Portfolio A'.
 	
 	result  := OrderedCollection new.
 	result add: 'Portfolio A'.
-	self assert: portfolio detailedTreePrinter equals: result.
+	result add: '    Balance = 0'.
+
+	
+	self assert: (PortfolioDetailedTreePrinter for: portfolio) equals: result.
 ! !
 
-!PortfolioDetailedTreePrinterTests methodsFor: 'as yet unclassified' stamp: 'MF 7/14/2021 19:37:40'!
+!PortfolioDetailedTreePrinterTests methodsFor: 'as yet unclassified' stamp: 'MF 7/15/2021 18:42:42'!
 test02
 	|portfolio result |
 	portfolio  := Portfolio named: 'Portfolio B'.
 	
 	result  := OrderedCollection new.
 	result add: 'Portfolio B'.
-	self assert: portfolio detailedTreePrinter equals: result.
+	result add: '    Balance = 0'.
+	
+
+	self assert: (PortfolioDetailedTreePrinter for: portfolio) equals: result.
 ! !
 
-!PortfolioDetailedTreePrinterTests methodsFor: 'as yet unclassified' stamp: 'MF 7/14/2021 19:40:08'!
+!PortfolioDetailedTreePrinterTests methodsFor: 'as yet unclassified' stamp: 'MF 7/15/2021 18:42:38'!
 test03
 	|portfolio result account |
 	portfolio  := Portfolio named: 'Portfolio B'.
@@ -194,11 +200,15 @@ test03
 	result  := OrderedCollection new.
 	result add: 'Portfolio B'.
 	result add: '    La Cuenta De Juan'.
+	result add: '        Balance = 0 pesos'.
+	result add: '    Balance = 0 pesos'.
 
-	self assert: portfolio detailedTreePrinter equals: result.
+
+	self assert: (PortfolioDetailedTreePrinter for: portfolio) equals: result.
+
 ! !
 
-!PortfolioDetailedTreePrinterTests methodsFor: 'as yet unclassified' stamp: 'MF 7/14/2021 19:42:08'!
+!PortfolioDetailedTreePrinterTests methodsFor: 'as yet unclassified' stamp: 'MF 7/15/2021 18:42:32'!
 test04
 	|portfolio result account |
 	portfolio  := Portfolio named: 'Portfolio B'.
@@ -208,11 +218,12 @@ test04
 	result  := OrderedCollection new.
 	result add: 'Portfolio B'.
 	result add: '    La Cuenta De Nico'.
-
-	self assert: portfolio detailedTreePrinter equals: result.
+	result add: '        Balance = 0 pesos'.
+	result add: '    Balance = 0 pesos'.
+	self assert: (PortfolioDetailedTreePrinter for: portfolio) equals: result.
 ! !
 
-!PortfolioDetailedTreePrinterTests methodsFor: 'as yet unclassified' stamp: 'MF 7/14/2021 19:45:20'!
+!PortfolioDetailedTreePrinterTests methodsFor: 'as yet unclassified' stamp: 'MF 7/15/2021 18:42:28'!
 test05
 	|portfolio result account account2|
 	portfolio  := Portfolio named: 'Portfolio B'.
@@ -226,34 +237,38 @@ test05
 	result  := OrderedCollection new.
 	result add: 'Portfolio B'.
 	result add: '    La Cuenta De Nico'.
+	result add: '        Balance = 0 pesos'.
 	result add: '    La Cuenta De Ivan'.
+	result add: '        Balance = 0 pesos'.
+	result add: '    Balance = 0 pesos'.
 
 
-	self assert: portfolio detailedTreePrinter equals: result.
+	self assert: (PortfolioDetailedTreePrinter for: portfolio) equals: result.
 ! !
 
-!PortfolioDetailedTreePrinterTests methodsFor: 'as yet unclassified' stamp: 'MF 7/14/2021 19:49:14'!
+!PortfolioDetailedTreePrinterTests methodsFor: 'as yet unclassified' stamp: 'MF 7/15/2021 18:42:25'!
 test06
 	|portfolio result account  portfolioB|
 	portfolio  := Portfolio named: 'Portfolio A'.
 	portfolioB  := Portfolio named: 'Portfolio B'.
 	account := ReceptiveAccount named: 'La Cuenta de Gaby'.
-	
+
 	portfolio add: portfolioB .
 	portfolioB add: account .
 
-	
 	result  := OrderedCollection new.
 	result add: 'Portfolio A'.
 	result add: '    Portfolio B'.
 	result add: '        La Cuenta de Gaby'.
+	result add: '            Balance = 0 pesos'.
+	result add: '        Balance = 0 pesos'.
+	result add: '    Balance = 0 pesos'.
 
 
-
-	self assert: portfolio detailedTreePrinter equals: result.
+	self assert: (PortfolioDetailedTreePrinter for: portfolio) equals: result.
 ! !
 
-!PortfolioDetailedTreePrinterTests methodsFor: 'as yet unclassified' stamp: 'MF 7/14/2021 22:03:20'!
+!PortfolioDetailedTreePrinterTests methodsFor: 'as yet unclassified' stamp: 'MF 7/15/2021 18:42:21'!
 test07
 	|portfolio result account  account2 portfolioB|
 	portfolio  := Portfolio named: 'Portfolio A'.
@@ -269,38 +284,117 @@ test07
 	result add: 'Portfolio A'.
 	result add: '    Portfolio B'.
 	result add: '        La Cuenta de Gaby'.
+	result add: '            Balance = 0 pesos'.
 	result add: '        La Cuenta de Jorge'.
+	result add: '            Balance = 0 pesos'.
+	result add: '        Balance = 0 pesos'.
+	result add: '    Balance = 0 pesos'.
 
-	self assert: portfolio detailedTreePrinter equals: result.
+
+
+
+	self assert: (PortfolioDetailedTreePrinter for: portfolio) equals: result.
 ! !
 
-!PortfolioDetailedTreePrinterTests methodsFor: 'as yet unclassified' stamp: 'MF 7/14/2021 22:06:14'!
+!PortfolioDetailedTreePrinterTests methodsFor: 'as yet unclassified' stamp: 'MF 7/15/2021 18:42:16'!
 test08
-	|portfolio  result account  account2 portfolioB account3 portfolioC |
+	|portfolio result account  |
 	portfolio  := Portfolio named: 'Portfolio A'.
-	portfolioB  := Portfolio named: 'Portfolio B'.
-	portfolioC  := Portfolio named: 'Portfolio C'.
-
 	account := ReceptiveAccount named: 'La Cuenta de Gaby'.
-	account2 := ReceptiveAccount named: 'La Cuenta de Jorge'.
-	account3 := ReceptiveAccount named: 'La Cuenta de Papo'.
-
-	portfolio add: portfolioB .
-	portfolioB add: account .
-	portfolioB add: account2 .
 	
-	portfolio add: portfolioC .
-	portfolioC add: account3 .
-
+	portfolio add: account .
+	Deposit register: 10 * peso on: account .
 	result  := OrderedCollection new.
 	result add: 'Portfolio A'.
-	result add: '    Portfolio B'.
-	result add: '        La Cuenta de Gaby'.
-	result add: '        La Cuenta de Jorge'.
-	result add: '    Portfolio C'.
-	result add: '        La Cuenta de Papo'.
+	result add: '    La Cuenta de Gaby'.
+	result add: '        Depósito por 10 pesos'.
+	result add: '        Balance = 10 pesos'.
+	result add: '    Balance = 10 pesos'.
 
-	self assert: portfolio detailedTreePrinter equals: result.
+
+
+	self assert: (PortfolioDetailedTreePrinter for: portfolio) equals: result.
+! !
+
+!PortfolioDetailedTreePrinterTests methodsFor: 'as yet unclassified' stamp: 'MF 7/15/2021 18:42:13'!
+test09
+	|portfolio result account  |
+	portfolio  := Portfolio named: 'Portfolio A'.
+	account := ReceptiveAccount named: 'La Cuenta de Gaby'.
+	
+	portfolio add: account .
+	Deposit register: 10 * peso on: account .
+	result  := OrderedCollection new.
+	result add: 'Portfolio A'.
+	result add: '    La Cuenta de Gaby'.
+	result add: '        Depósito por 10 pesos'.
+	result add: '        Balance = 10 pesos'.
+	result add: '    Balance = 10 pesos'.
+
+
+	self assert: (PortfolioDetailedTreePrinter for: portfolio) equals: result.
+! !
+
+!PortfolioDetailedTreePrinterTests methodsFor: 'as yet unclassified' stamp: 'MF 7/15/2021 18:42:07'!
+test10
+	|portfolio result account portfolioB account2  |
+	portfolio  := Portfolio named: 'Portfolio A'.
+	portfolioB  := Portfolio named: 'Portfolio B'.
+
+	account := ReceptiveAccount named: 'La Cuenta de Gaby'.
+	account2 := ReceptiveAccount named: 'La Cuenta de Mauro'.
+	
+	portfolio add: account .
+	portfolio add: portfolioB .
+	portfolioB add: account2 .
+	
+	Deposit register: 10 * peso on: account .
+	Withdraw register: 20 * peso on: account2 .
+	result  := OrderedCollection new.
+	result add: 'Portfolio A'.
+	result add: '    La Cuenta de Gaby'.
+	result add: '        Depósito por 10 pesos'.
+	result add: '        Balance = 10 pesos'.
+	result add: '    Portfolio B'.
+	result add: '        La Cuenta de Mauro'.
+	result add: '            Extracción por 20 pesos'.
+	result add: '            Balance = -20 pesos'.
+	result add: '        Balance = -20 pesos'.
+	result add: '    Balance = -10 pesos'.
+
+
+	self assert: (PortfolioDetailedTreePrinter for: portfolio) equals: result.
+! !
+
+!PortfolioDetailedTreePrinterTests methodsFor: 'as yet unclassified' stamp: 'MF 7/15/2021 18:29:36'!
+test11PATRON
+	|portfolio result account portfolioB account2  |
+	portfolio  := Portfolio named: 'Portfolio A'.
+	portfolioB  := Portfolio named: 'Portfolio B'.
+
+	account := ReceptiveAccount named: 'La Cuenta de Gaby'.
+	account2 := ReceptiveAccount named: 'La Cuenta de Mauro'.
+	
+	portfolio add: account .
+	portfolio add: portfolioB .
+	portfolioB add: account2 .
+	
+	Deposit register: 10 * peso on: account .
+	Withdraw register: 20 * peso on: account2 .
+	result  := OrderedCollection new.
+	result add: 'Portfolio A'.
+	result add: '    La Cuenta de Gaby'.
+	result add: '        Depósito por 10 pesos'.
+	result add: '        Balance = 10 pesos'.
+	result add: '    Portfolio B'.
+	result add: '        La Cuenta de Mauro'.
+	result add: '            Extracción por 20 pesos'.
+	result add: '            Balance = -20 pesos'.
+	result add: '        Balance = -20 pesos'.
+	result add: '    Balance = -10 pesos'.
+
+
+	self assert: (PortfolioDetailedTreePrinter for: portfolio) equals: result.
 ! !
 
 
@@ -526,8 +620,8 @@ TestCase subclass: #PortfolioTreePrinterTests
 	poolDictionaries: ''
 	category: 'ServiciosFinancieros-Solucion'!
 
-!PortfolioTreePrinterTests methodsFor: 'as yet unclassified' stamp: 'MF 7/13/2021 22:18:05'!
-test01
+!PortfolioTreePrinterTests methodsFor: 'as yet unclassified' stamp: 'MF 7/15/2021 17:53:45'!
+test01EmptyPortfolioTree
 	|portfolio result incorrectResult|
 	portfolio  := Portfolio named: 'Portfolio A'.
 	result  := OrderedCollection new.
@@ -537,25 +631,11 @@ test01
 	incorrectResult add: 'Portfolio B'.
 
 	
-	self assert: portfolio treePrinter equals: result.
-	self deny: (portfolio treePrinter isEqualTo: incorrectResult ).! !
+	self assert: (PortfolioTreePrinter for: portfolio) equals: result.
+	self deny: ((PortfolioTreePrinter for: portfolio) isEqualTo: incorrectResult ).! !
 
-!PortfolioTreePrinterTests methodsFor: 'as yet unclassified' stamp: 'MF 7/13/2021 22:18:54'!
-test02
-	|portfolio result incorrectResult|
-	portfolio  := Portfolio named: 'Portfolio B'.
-	result  := OrderedCollection new.
-	incorrectResult  := OrderedCollection new.
-
-	result add: 'Portfolio B'.
-	incorrectResult add: 'Portfolio C'.
-
-	
-	self assert: portfolio treePrinter equals: result.
-	self deny: (portfolio treePrinter isEqualTo: incorrectResult ).! !
-
-!PortfolioTreePrinterTests methodsFor: 'as yet unclassified' stamp: 'MF 7/14/2021 19:40:25'!
-test03
+!PortfolioTreePrinterTests methodsFor: 'as yet unclassified' stamp: 'MF 7/15/2021 17:53:29'!
+test02PortfolioTreeWithAnAccount
 	|account portfolio result |
 	
 	account :=ReceptiveAccount named: 'La Cuenta de Ivan' .
@@ -568,28 +648,11 @@ test03
 	result add: ('    ' append: 'La Cuenta de Ivan') .
 
 	
-	self assert: portfolio treePrinter equals: result.
+	self assert: (PortfolioTreePrinter for: portfolio) equals: result.
 ! !
 
-!PortfolioTreePrinterTests methodsFor: 'as yet unclassified' stamp: 'MF 7/13/2021 23:05:02'!
-test04
-	|account portfolio result  |
-	
-	account :=ReceptiveAccount named: 'La Cuenta de Matias' .
-	portfolio  := Portfolio named: 'Portfolio A' with: account .
-	
-	result  := OrderedCollection new.
-	
-	result add: 'Portfolio A'.
-	result add: ('    ' append: 'La Cuenta de Matias') .
-
-
-	
-	self assert: portfolio treePrinter equals: result.
-! !
-
-!PortfolioTreePrinterTests methodsFor: 'as yet unclassified' stamp: 'MF 7/13/2021 23:05:26'!
-test05
+!PortfolioTreePrinterTests methodsFor: 'as yet unclassified' stamp: 'MF 7/15/2021 17:53:25'!
+test03PortfolioTreeWithManyAccounts
 	|account account2 portfolio result |
 	
 	
@@ -605,11 +668,11 @@ test05
 	result add: ('    ' append: 'La Cuenta de Ivan') .
 	
 	
-	self assert: portfolio treePrinter equals: result.
+	self assert: (PortfolioTreePrinter for: portfolio) equals: result.
 ! !
 
-!PortfolioTreePrinterTests methodsFor: 'as yet unclassified' stamp: 'MF 7/13/2021 23:09:32'!
-test06
+!PortfolioTreePrinterTests methodsFor: 'as yet unclassified' stamp: 'MF 7/15/2021 17:53:22'!
+test04PortfolioTreeWithAPortfolio
 	|portfolio portfolioB result |
 
 
@@ -623,11 +686,11 @@ test06
 	result add: ('    ' append: 'Portfolio B') .
 	
 	
-	self assert: portfolio treePrinter equals: result.
+	self assert: (PortfolioTreePrinter for: portfolio) equals: result.
 ! !
 
-!PortfolioTreePrinterTests methodsFor: 'as yet unclassified' stamp: 'MF 7/13/2021 23:26:51'!
-test07
+!PortfolioTreePrinterTests methodsFor: 'as yet unclassified' stamp: 'MF 7/15/2021 17:53:19'!
+test05PortfolioTreeWithPortfolioWithAccount
 	|portfolio account portfolioB result |
 
 	account := ReceptiveAccount named: 'Cuenta de Sergio'.
@@ -643,11 +706,11 @@ test07
 
 	
 	
-	self assert: portfolio treePrinter equals: result.
+	self assert: (PortfolioTreePrinter for: portfolio) equals: result.
 ! !
 
-!PortfolioTreePrinterTests methodsFor: 'as yet unclassified' stamp: 'MF 7/13/2021 23:32:30'!
-test08
+!PortfolioTreePrinterTests methodsFor: 'as yet unclassified' stamp: 'MF 7/15/2021 17:53:15'!
+test06PortfolioTreeWithManyIndentationLevels
 	|portfolio account account2 portfolioB portfolioC result |
 	
 	account := ReceptiveAccount named: 'Cuenta de Sergio'.
@@ -664,7 +727,7 @@ test08
 	result add: ('        ' append: 'Portfolio C') .
 	result add: ('            ' append: 'Cuenta de Lucho') .
 
-	self assert: portfolio treePrinter equals: result.
+	self assert: (PortfolioTreePrinter for: portfolio) equals: result.
 ! !
 
 
@@ -1019,72 +1082,23 @@ signalCanNotAddAccount
 	self error: self class canNotAddAccountErrorMessage! !
 
 
-!Portfolio methodsFor: 'as yet unclassified' stamp: 'MF 7/14/2021 22:01:44'!
-detailedTreePrinter
-	|detailedTree tab|
-	tab := '    '.
-	detailedTree := OrderedCollection new.
-	detailedTree add: name.
-	accounts do:[:anAccount|
-		detailedTree add:( tab append: anAccount name).
-		(anAccount isKindOf: Portfolio) ifTrue: [detailedTree addAll: (anAccount detailedTreePrinterWithDepth: 2) ].
-		].
-	^detailedTree.! !
+!Portfolio methodsFor: 'as yet unclassified' stamp: 'MF 7/15/2021 18:17:51'!
+addToTreePrinter: aTreePrinter withIndentation: anIndentation
+	^aTreePrinter addPortfolio: self withIndentation: anIndentation .! !
 
-!Portfolio methodsFor: 'as yet unclassified' stamp: 'IE 7/14/2021 22:56:14'!
-detailedTreePrinterWithDepth: aDepth
-	|detailedTree tab indentation|
-	tab := '    '.
-	indentation := ''.
-	detailedTree := OrderedCollection new.
+!Portfolio methodsFor: 'as yet unclassified' stamp: 'MF 7/15/2021 18:25:53'!
+attachToDetailedTreePrinter: aDetailedTreePrinter
+	^aDetailedTreePrinter attachPortfolioWithAccounts: accounts.
 
-	1 to: aDepth do:[:i|
-	indentation :=  indentation append: tab ].
+! !
 
-	accounts do:[:anAccount|
-		detailedTree add:( indentation append: anAccount name).
-		"AGREGAR TEST 3 O MAS"
-		(anAccount isKindOf: Portfolio) ifTrue: [detailedTree addAll: (anAccount detailedTreePrinterWithDepth: (aDepth +1)) ].
-		].
-	^detailedTree.! !
+!Portfolio methodsFor: 'as yet unclassified' stamp: 'MF 7/15/2021 17:51:05'!
+attachToTreePrinter: aTreePrinter
+	^aTreePrinter attachPortfolioWithAccounts: accounts.! !
 
 !Portfolio methodsFor: 'as yet unclassified' stamp: 'MF 7/13/2021 23:09:08'!
 name
 	^name! !
-
-!Portfolio methodsFor: 'as yet unclassified' stamp: 'MF 7/14/2021 19:30:57'!
-treePrinter
-	|tree tab|	
-	"El tab lo hacemos con 4 espacios porque apretar la tecla Tab no funcionaba como esperabamos"
-	tree := OrderedCollection new.
-	tab := '    '.
-	tree add: name.
-
-	accounts do: [ :anAccount |
-		tree add: (tab append: (anAccount name)).
-		(anAccount isKindOf: Portfolio) ifTrue: [tree addAll: (anAccount treePrinterWithDepth: 2)]
-		].
-	^tree.
-	
-! !
-
-!Portfolio methodsFor: 'as yet unclassified' stamp: 'MF 7/14/2021 19:31:03'!
-treePrinterWithDepth: aDepth
-	|tree indentation tab |
-	"El tab lo hacemos con 4 espacios porque apretar la tecla Tab no funcionaba como esperabamos"
-
-	indentation := ''.
-	tree := OrderedCollection new.
-	tab := '    '.
-
-	1 to: aDepth do:[:i|
-		indentation :=  indentation append: tab ].
-
-	accounts do: [ :anAccount |
-		tree add: (indentation append: (anAccount name)).
-		(anAccount isKindOf: Portfolio) ifTrue: [tree addAll: (anAccount treePrinterWithDepth: (aDepth + 1))]
-		].
-	^tree.! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
@@ -1208,6 +1222,14 @@ isComposedBy: anAccount
 
 	^self = anAccount ! !
 
+
+!ReceptiveAccount methodsFor: 'as yet unclassified' stamp: 'MF 7/15/2021 18:48:21'!
+addToDetailedTreePrinter: aTreePrinter withIndentation: anIndentation
+	^aTreePrinter addReceptiveAccount: self withIndentation: anIndentation .! !
+
+!ReceptiveAccount methodsFor: 'as yet unclassified' stamp: 'MF 7/15/2021 18:11:16'!
+addToTreePrinter: aTreePrinter withIndentation: anIndentation
+	^aTreePrinter addReceptiveAccount: name withIndentation: anIndentation .! !
 
 !ReceptiveAccount methodsFor: 'as yet unclassified' stamp: 'MF 7/13/2021 22:29:18'!
 name
@@ -1375,10 +1397,10 @@ attachToReport: aReport
 
 	^aReport attachTransferWithdrawLeg: self. ! !
 
-!TransferWithdrawLeg methodsFor: 'as yet unclassified' stamp: 'IE 7/12/2021 20:51:19'!
+!TransferWithdrawLeg methodsFor: 'as yet unclassified' stamp: 'MF 7/15/2021 17:35:07'!
 transferValue
 
-	^ TransferNet transferValueForTransferWithdrawLeg: self.! !
+	^ AccountTransferNet transferValueForTransferWithdrawLeg: self.! !
 
 
 !classDefinition: #Withdraw category: 'ServiciosFinancieros-Solucion'!
@@ -1443,8 +1465,8 @@ Object subclass: #Reports
 	category: 'ServiciosFinancieros-Solucion'!
 
 
-!classDefinition: #Summary category: 'ServiciosFinancieros-Solucion'!
-Reports subclass: #Summary
+!classDefinition: #AccountSummary category: 'ServiciosFinancieros-Solucion'!
+Reports subclass: #AccountSummary
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -1452,31 +1474,31 @@ Reports subclass: #Summary
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
-!classDefinition: 'Summary class' category: 'ServiciosFinancieros-Solucion'!
-Summary class
+!classDefinition: 'AccountSummary class' category: 'ServiciosFinancieros-Solucion'!
+AccountSummary class
 	instanceVariableNames: ''!
 
-!Summary class methodsFor: 'as yet unclassified' stamp: 'IE 7/13/2021 19:40:32'!
+!AccountSummary class methodsFor: 'as yet unclassified' stamp: 'IE 7/13/2021 19:40:32'!
 attachDeposit: aDepositTransaction
 
 	^'Depósito por ' append: aDepositTransaction value asString.! !
 
-!Summary class methodsFor: 'as yet unclassified' stamp: 'IE 7/13/2021 19:40:59'!
+!AccountSummary class methodsFor: 'as yet unclassified' stamp: 'IE 7/13/2021 19:40:59'!
 attachTransferDepositLeg: aDepositTransference
 
 	^'Entrada por transferencia de ' append: aDepositTransference value asString.! !
 
-!Summary class methodsFor: 'as yet unclassified' stamp: 'IE 7/13/2021 19:41:14'!
+!AccountSummary class methodsFor: 'as yet unclassified' stamp: 'IE 7/13/2021 19:41:14'!
 attachTransferWithdrawLeg: aWithdrawTransference
 
 	^'Salida por transferencia de ' append: aWithdrawTransference value asString.! !
 
-!Summary class methodsFor: 'as yet unclassified' stamp: 'IE 7/13/2021 19:41:33'!
+!AccountSummary class methodsFor: 'as yet unclassified' stamp: 'IE 7/13/2021 19:41:33'!
 attachWithdraw: aWithdrawTransaction
 
 	^'Extracción por ' append: aWithdrawTransaction value asString.! !
 
-!Summary class methodsFor: 'as yet unclassified' stamp: 'IE 7/12/2021 21:09:31'!
+!AccountSummary class methodsFor: 'as yet unclassified' stamp: 'IE 7/12/2021 21:09:31'!
 for: account
 
 	|summary |
@@ -1492,8 +1514,8 @@ for: account
 	^summary.! !
 
 
-!classDefinition: #TransferNet category: 'ServiciosFinancieros-Solucion'!
-Reports subclass: #TransferNet
+!classDefinition: #AccountTransferNet category: 'ServiciosFinancieros-Solucion'!
+Reports subclass: #AccountTransferNet
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -1501,31 +1523,31 @@ Reports subclass: #TransferNet
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
-!classDefinition: 'TransferNet class' category: 'ServiciosFinancieros-Solucion'!
-TransferNet class
+!classDefinition: 'AccountTransferNet class' category: 'ServiciosFinancieros-Solucion'!
+AccountTransferNet class
 	instanceVariableNames: ''!
 
-!TransferNet class methodsFor: 'as yet unclassified' stamp: 'IE 7/13/2021 19:40:32'!
+!AccountTransferNet class methodsFor: 'as yet unclassified' stamp: 'IE 7/13/2021 19:40:32'!
 attachDeposit: aDepositTransaction
 
 	^0.! !
 
-!TransferNet class methodsFor: 'as yet unclassified' stamp: 'IE 7/13/2021 19:40:59'!
+!AccountTransferNet class methodsFor: 'as yet unclassified' stamp: 'IE 7/13/2021 19:40:59'!
 attachTransferDepositLeg: aDepositTransferTransaction
 
 	^aDepositTransferTransaction value.! !
 
-!TransferNet class methodsFor: 'as yet unclassified' stamp: 'IE 7/13/2021 19:41:14'!
+!AccountTransferNet class methodsFor: 'as yet unclassified' stamp: 'IE 7/13/2021 19:41:14'!
 attachTransferWithdrawLeg: aWithdrawTransferTransaction
 
 	^aWithdrawTransferTransaction value * -1.! !
 
-!TransferNet class methodsFor: 'as yet unclassified' stamp: 'IE 7/13/2021 19:41:33'!
+!AccountTransferNet class methodsFor: 'as yet unclassified' stamp: 'IE 7/13/2021 19:41:33'!
 attachWithdraw: aWithdrawTransaction
 
 	^0.! !
 
-!TransferNet class methodsFor: 'as yet unclassified' stamp: 'IE 7/12/2021 21:19:23'!
+!AccountTransferNet class methodsFor: 'as yet unclassified' stamp: 'IE 7/12/2021 21:19:23'!
 for: account
 	| net |
 	
@@ -1536,6 +1558,137 @@ for: account
 	].
 
 	^net.! !
+
+
+!classDefinition: #PortfolioDetailedTreePrinter category: 'ServiciosFinancieros-Solucion'!
+Reports subclass: #PortfolioDetailedTreePrinter
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'ServiciosFinancieros-Solucion'!
+
+"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
+
+!classDefinition: 'PortfolioDetailedTreePrinter class' category: 'ServiciosFinancieros-Solucion'!
+PortfolioDetailedTreePrinter class
+	instanceVariableNames: ''!
+
+!PortfolioDetailedTreePrinter class methodsFor: 'as yet unclassified' stamp: 'MF 7/15/2021 18:47:24'!
+addReceptiveAccount: anAccount withIndentation: anIndentation
+	|detailedTree accountSummary|
+	detailedTree := OrderedCollection new.
+	detailedTree add:( anIndentation append: anAccount name).
+			accountSummary := AccountSummary for: anAccount.
+			1 to: accountSummary size do:[ :index|
+				accountSummary at: index put: ('    ' append: (anIndentation append: (accountSummary at: index )))].
+	^detailedTree .! !
+
+!PortfolioDetailedTreePrinter class methodsFor: 'as yet unclassified' stamp: 'MF 7/15/2021 18:24:43'!
+attachPortfolioWithAccounts: accounts
+	^self detailedTreePrinterWithDepth: 1 forPortfolioWithAccounts: accounts .! !
+
+!PortfolioDetailedTreePrinter class methodsFor: 'as yet unclassified' stamp: 'MF 7/15/2021 18:48:59'!
+detailedTreePrinterWithDepth: aDepth forPortfolioWithAccounts: accounts
+
+|detailedTree tab indentation accountSummary portfolioAccounts|
+	tab := '    '.
+	indentation := ''.
+	detailedTree := OrderedCollection new.
+
+	1 to: aDepth do:[:i|
+	indentation :=  indentation append: tab ].
+
+	accounts do:[:anAccount|
+		"(anAccount isKindOf: ReceptiveAccount ) ifTrue: [detailedTree addAll: (anAccount addToDetailedTreePrinter: self withIndentation: indentation)] ."
+		
+		(anAccount isKindOf: ReceptiveAccount ) ifTrue: [
+			detailedTree add:( indentation append: anAccount name).
+			accountSummary := AccountSummary for: anAccount.
+			1 to: accountSummary size do:[ :index|
+				accountSummary at: index put: (tab append: (indentation append: (accountSummary at: index ))).
+				].
+			detailedTree addAll: accountSummary .
+			].		
+	
+		(anAccount isKindOf: Portfolio) ifTrue: [
+			portfolioAccounts := self for: anAccount .
+			1 to: portfolioAccounts size do: [: index|
+				portfolioAccounts at: index put: (indentation append:(portfolioAccounts at:index))].			
+			detailedTree addAll: portfolioAccounts].
+		].
+	^detailedTree.! !
+
+!PortfolioDetailedTreePrinter class methodsFor: 'as yet unclassified' stamp: 'MF 7/15/2021 18:32:57'!
+for: aPortfolio 
+
+	|detailedTree|
+	detailedTree := OrderedCollection new.
+	detailedTree add: aPortfolio name.
+	detailedTree addAll: (aPortfolio attachToDetailedTreePrinter:self ).
+	detailedTree add: ('    Balance = 'append: (aPortfolio balance asString)).
+
+	^detailedTree.
+	! !
+
+
+!classDefinition: #PortfolioTreePrinter category: 'ServiciosFinancieros-Solucion'!
+Reports subclass: #PortfolioTreePrinter
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'ServiciosFinancieros-Solucion'!
+
+"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
+
+!classDefinition: 'PortfolioTreePrinter class' category: 'ServiciosFinancieros-Solucion'!
+PortfolioTreePrinter class
+	instanceVariableNames: ''!
+
+!PortfolioTreePrinter class methodsFor: 'as yet unclassified' stamp: 'MF 7/15/2021 18:18:42'!
+addPortfolio: aPortfolio withIndentation: anIndentation
+	|portfolioAccounts|
+	portfolioAccounts := self for: aPortfolio .
+	1 to: portfolioAccounts size do: [: index|
+	portfolioAccounts at: index put: (anIndentation append:(portfolioAccounts at:index))].			
+	^portfolioAccounts .! !
+
+!PortfolioTreePrinter class methodsFor: 'as yet unclassified' stamp: 'MF 7/15/2021 18:12:45'!
+addReceptiveAccount: accountName withIndentation: anIndentation 
+	|col|
+	col := OrderedCollection new.
+	col add: (anIndentation append: accountName).
+	^col.! !
+
+!PortfolioTreePrinter class methodsFor: 'as yet unclassified' stamp: 'MF 7/15/2021 17:49:28'!
+attachPortfolioWithAccounts: accounts
+	^self treePrinterWithDepth: 1 forPortfolioWithAccounts: accounts .! !
+
+!PortfolioTreePrinter class methodsFor: 'as yet unclassified' stamp: 'MF 7/15/2021 17:50:09'!
+for: aPortfolio 
+	|tree |	
+	tree := OrderedCollection new.
+	tree add: aPortfolio name.
+	tree addAll: (aPortfolio attachToTreePrinter:self ).
+	^tree.
+	
+	
+	! !
+
+!PortfolioTreePrinter class methodsFor: 'as yet unclassified' stamp: 'MF 7/15/2021 18:19:06'!
+treePrinterWithDepth: aDepth forPortfolioWithAccounts: accounts
+	|tree indentation tab |
+	"El tab lo hacemos con 4 espacios porque apretar la tecla Tab no funcionaba como esperabamos"
+
+	indentation := ''.
+	tree := OrderedCollection new.
+	tab := '    '.
+
+	1 to: aDepth do:[:i|
+		indentation :=  indentation append: tab ].
+	accounts do: [ :anAccount |
+		tree addAll: (anAccount addToTreePrinter: self withIndentation: indentation ).
+		].
+	^tree.! !
 
 
 !classDefinition: #Transfer category: 'ServiciosFinancieros-Solucion'!
