@@ -129,8 +129,8 @@ TestCase subclass: #TestMarsRoverLog
 	poolDictionaries: ''
 	category: 'MarsRover-Solucion'!
 
-!TestMarsRoverLog methodsFor: 'tests' stamp: 'IE 7/22/2021 16:05:03'!
-test01
+!TestMarsRoverLog methodsFor: 'tests' stamp: 'IE 7/22/2021 17:58:47'!
+test01MarsRoverLoggerLogsChangeInPositionMovingForward
 
 	| marsRover result marsRoverLogger |
 	marsRover := MarsRover startingAt: 0@0 heading: 'North'.
@@ -145,8 +145,8 @@ test01
 	
 	self assert: marsRoverLogger log equals: result.! !
 
-!TestMarsRoverLog methodsFor: 'tests' stamp: 'IE 7/22/2021 16:05:24'!
-test02
+!TestMarsRoverLog methodsFor: 'tests' stamp: 'IE 7/22/2021 17:59:08'!
+test02MarsRoverLoggerLogsChangeInPositionMovingBackwards
 
 	| marsRover result marsRoverLogger |
 	marsRover := MarsRover startingAt: 0@0 heading: 'North'.
@@ -160,8 +160,8 @@ test02
 	
 	self assert: marsRoverLogger log equals: result.! !
 
-!TestMarsRoverLog methodsFor: 'tests' stamp: 'IE 7/22/2021 16:13:55'!
-test03
+!TestMarsRoverLog methodsFor: 'tests' stamp: 'IE 7/22/2021 18:00:29'!
+test03MarsRoverLoggerLogsChangeInDirectionTurningRight
 
 	| marsRover result marsRoverLogger |
 	marsRover := MarsRover startingAt: 0@0 heading: 'North'.
@@ -182,8 +182,8 @@ test03
 	
 	self assert: marsRoverLogger log equals: result.! !
 
-!TestMarsRoverLog methodsFor: 'tests' stamp: 'IE 7/22/2021 16:09:14'!
-test04
+!TestMarsRoverLog methodsFor: 'tests' stamp: 'IE 7/22/2021 18:01:15'!
+test04MarsRoverLoggerLogsChangeInDirectionTurningLeft
 
 	| marsRover result marsRoverLogger |
 	marsRover := MarsRover startingAt: 0@0 heading: 'North'.
@@ -193,7 +193,7 @@ test04
 	marsRover addPositionObserver: marsRoverLogger.
 	marsRover addDirectionObserver: marsRoverLogger.
 	
-	marsRover processCommands: 'bfffrr'.
+	marsRover processCommands: 'bfffrrl'.
 	
 	result add: '0@-1'.
 	result add: '0@0'.
@@ -201,11 +201,12 @@ test04
 	result add: '0@2'.
 	result add: 'East'.
 	result add: 'South'.
+	result add: 'East'.
 	
 	self assert: marsRoverLogger log equals: result.! !
 
-!TestMarsRoverLog methodsFor: 'tests' stamp: 'IE 7/22/2021 16:13:03'!
-test05
+!TestMarsRoverLog methodsFor: 'tests' stamp: 'IE 7/22/2021 18:10:37'!
+test05MarsRoverLoggerCanLogOnlyChangesInPosition
 
 	| marsRover result marsRoverLogger |
 	marsRover := MarsRover startingAt: 0@0 heading: 'North'.
@@ -222,8 +223,8 @@ test05
 	
 	self assert: marsRoverLogger log equals: result.! !
 
-!TestMarsRoverLog methodsFor: 'tests' stamp: 'IE 7/22/2021 16:13:08'!
-test06
+!TestMarsRoverLog methodsFor: 'tests' stamp: 'IE 7/22/2021 18:04:13'!
+test06MarsRoverLoggerCanLogOnlyChangesInDirection
 
 	| marsRover result marsRoverLogger |
 	marsRover := MarsRover startingAt: 0@0 heading: 'North'.
@@ -249,8 +250,8 @@ TestCase subclass: #TestMarsRoverWindow
 	poolDictionaries: ''
 	category: 'MarsRover-Solucion'!
 
-!TestMarsRoverWindow methodsFor: 'tests' stamp: 'IE 7/22/2021 16:15:08'!
-test01
+!TestMarsRoverWindow methodsFor: 'tests' stamp: 'IE 7/22/2021 18:05:41'!
+test01MarsRoverStatusWindowShowsChangeInPositionMovingForward
 
 	| marsRover result marsRoverStatusWindow |
 	marsRover := MarsRover startingAt: 0@0 heading: 'North'.
@@ -267,8 +268,8 @@ test01
 
 	! !
 
-!TestMarsRoverWindow methodsFor: 'tests' stamp: 'IE 7/22/2021 16:16:38'!
-test02
+!TestMarsRoverWindow methodsFor: 'tests' stamp: 'IE 7/22/2021 18:05:59'!
+test02MarsRoverStatusWindowShowsChangeInPositionMovingBackwards
 
 	| marsRover result marsRoverStatusWindow |
 	marsRover := MarsRover startingAt: 0@0 heading: 'North'.
@@ -285,8 +286,8 @@ test02
 
 	! !
 
-!TestMarsRoverWindow methodsFor: 'tests' stamp: 'IE 7/22/2021 16:16:51'!
-test03
+!TestMarsRoverWindow methodsFor: 'tests' stamp: 'IE 7/22/2021 18:12:15'!
+test03MarsRoverStatusWindowShowsChangeInDirectionTurningLeft
 
 	| marsRover result marsRoverStatusWindow |
 	marsRover := MarsRover startingAt: 0@0 heading: 'North'.
@@ -303,8 +304,44 @@ test03
 
 	! !
 
-!TestMarsRoverWindow methodsFor: 'tests' stamp: 'IE 7/22/2021 16:18:34'!
-test04
+!TestMarsRoverWindow methodsFor: 'tests' stamp: 'IE 7/22/2021 18:14:59'!
+test04MarsRoverStatusWindowShowsChangeInDirectionTurningRight
+
+	| marsRover result marsRoverStatusWindow |
+	marsRover := MarsRover startingAt: 0@0 heading: 'North'.
+	marsRoverStatusWindow := MarsRoverStatusWindow new.
+	result := OrderedCollection new.
+	
+	marsRover addDirectionObserver: marsRoverStatusWindow.
+
+	marsRover processCommands: 'r'.
+	
+	result add: 'East'.
+	
+	self assert: marsRoverStatusWindow status equals: result.
+
+	! !
+
+!TestMarsRoverWindow methodsFor: 'tests' stamp: 'IE 7/22/2021 18:16:51'!
+test05MarsRoverStatusWindowCanShowOnlyChangesInDirection
+
+	| marsRover result marsRoverStatusWindow |
+	marsRover := MarsRover startingAt: 0@0 heading: 'North'.
+	marsRoverStatusWindow := MarsRoverStatusWindow new.
+	result := OrderedCollection new.
+	
+	marsRover addDirectionObserver: marsRoverStatusWindow.
+
+	marsRover processCommands: 'frflll'.
+	
+	result add: 'South'.
+	
+	self assert: marsRoverStatusWindow status equals: result.
+
+	! !
+
+!TestMarsRoverWindow methodsFor: 'tests' stamp: 'IE 7/22/2021 18:17:34'!
+test06MarsRoverStatusWindowCanShowOnlyChangesInPosition
 
 	| marsRover result marsRoverStatusWindow |
 	marsRover := MarsRover startingAt: 0@0 heading: 'North'.
@@ -312,12 +349,10 @@ test04
 	result := OrderedCollection new.
 	
 	marsRover addPositionObserver: marsRoverStatusWindow.
-	marsRover addDirectionObserver: marsRoverStatusWindow.
 
 	marsRover processCommands: 'frflll'.
 	
 	result add: '1@1'.
-	result add: 'South'.
 	
 	self assert: marsRoverStatusWindow status equals: result.
 
@@ -488,7 +523,7 @@ headChange
 		aDirectionObserver updateDirection: head.
 		]! !
 
-!MarsRover methodsFor: 'as yet unclassified' stamp: 'IE 7/22/2021 15:56:00'!
+!MarsRover methodsFor: 'as yet unclassified' stamp: 'IE 7/22/2021 17:08:52'!
 positionChange
 
 	positionObservers do: [:aPositionObserver |
@@ -753,7 +788,7 @@ log
 
 	^log.! !
 
-!MarsRoverLogger methodsFor: 'as yet unclassified' stamp: 'IE 7/22/2021 16:01:29'!
+!MarsRoverLogger methodsFor: 'as yet unclassified' stamp: 'IE 7/22/2021 17:40:26'!
 updateDirection: anUpdate
 
 	(anUpdate isKindOf: MarsRoverHeadFacingEast ) ifTrue: [log add: 'East'].
