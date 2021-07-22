@@ -516,19 +516,24 @@ addPositionObserver: aPositionObserver
 
 	positionObservers add: aPositionObserver.! !
 
-!MarsRover methodsFor: 'as yet unclassified' stamp: 'IE 7/22/2021 15:51:32'!
+!MarsRover methodsFor: 'as yet unclassified' stamp: 'IE 7/22/2021 18:31:10'!
 headChange
 
-	directionObservers do: [:aDirectionObserver |
-		aDirectionObserver updateDirection: head.
+	self notifyObservers: directionObservers ofChangeIn: head using: #updateDirection:.! !
+
+!MarsRover methodsFor: 'as yet unclassified' stamp: 'IE 7/22/2021 18:28:50'!
+notifyObservers: aGroupOfObservers ofChangeIn: aChange using: aMessage
+
+	aGroupOfObservers do: [:anObserver |
+		aMessage sendTo: anObserver with: aChange.
 		]! !
 
-!MarsRover methodsFor: 'as yet unclassified' stamp: 'IE 7/22/2021 17:08:52'!
+!MarsRover methodsFor: 'as yet unclassified' stamp: 'IE 7/22/2021 18:29:58'!
 positionChange
 
-	positionObservers do: [:aPositionObserver |
-		aPositionObserver updatePosition: position.
-		]! !
+	self notifyObservers: positionObservers ofChangeIn: position using: #updatePosition:.
+	
+	! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
